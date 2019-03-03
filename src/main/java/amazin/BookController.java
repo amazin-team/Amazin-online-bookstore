@@ -26,7 +26,7 @@ public class BookController {
         Book new_Book = new Book();
         repository.save(new_Book);
         model.addAttribute("new_book", new_Book);
-        return "BookResult";
+        return "bookResult";
     }
 
 }
