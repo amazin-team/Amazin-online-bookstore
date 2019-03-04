@@ -1,2 +1,2 @@
 # Amazin-online-bookstore
-This is not affiliated by anyform with amazon.com
+This is not affiliated in any form with Amazon
