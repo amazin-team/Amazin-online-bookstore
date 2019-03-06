@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="/js/book_view.js"></script>
     <link href="/css/stylesheet.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 </head>
@@ -15,8 +16,10 @@
         <h1 id="logo">AMAZIN</h1>
         <p>The place where your books reside</p>
     </div>
-    <div th:replace=" ~{fragments/_bookBrowser.html :: dataTable} ">
-    </div>
+    <div th:replace=" ~{fragments/_bookBrowser.html :: dataTable} "></div>
+    <nav>
+        <a href="/addbook">Create a new book</a>
+    </nav>
 </body>
 
 </html>
