@@ -1,9 +1,11 @@
 .idea/
 target/
 Amazinonlinebookstore.iml
+Amazin-online-bookstore.iml
 .project
 .settings/org.eclipse.jdt.apt.core.prefs
 .classpath
 .settings/org.eclipse.core.resources.prefs
 .settings/org.eclipse.jdt.core.prefs
 .vscode/launch.json
+.DS_Store
