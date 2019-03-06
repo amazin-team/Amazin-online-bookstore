@@ -1,10 +1,10 @@
 # Amazin
 
-Amazin is an [Amazon][] inspired online book store written in Java, using the [Spring MVC][] framework and [JPA][].
+Amazin is an [Amazon] inspired online book store written in Java, using the [Spring Web MVC] framework and [JPA].
 
-[Amazon]:[https://amazon.com]
-[Spring MVC]:[https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html]
-[JPA]: [https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/cwlp_jpa.html]
+[Amazon]: https://amazon.com
+[Spring Web MVC]: https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html
+[JPA]: https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/cwlp_jpa.html
 
 ## Features
 
