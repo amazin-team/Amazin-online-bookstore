@@ -13,3 +13,10 @@ input, textarea { display: table-cell; }
     font-size: 90px;
     margin: 0;
 }
+
+textarea { 
+    margin: 0; 
+    padding: 0; 
+    display: block; 
+    font-size: 100%; 
+  } 
