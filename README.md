@@ -17,6 +17,7 @@ Amazin is considered a proof-of-concept/simulation of an online book store since
 
 ### Future
 
+- switch storing data records from in-memory h2 database to persisting to an actual database like PostgreSQL
 - allow searching for books based on name and other fields along with sorting and filtering the books
 - allow 'purchasing' books, ensuring book purchases do not exceed inventory, where users first put the books in their shopping cart then proceed to checkout
 - showing users book recommendations based on past purchases for books they have not purchased yet (look for users whose purchases are the most similar with the Jaccard distance)
