@@ -169,17 +169,17 @@ public class BaseTest {
         assertFunc.accept(message, expected, result);
     }
 
-    public void assertFieldEquals(Fields.Book field, Object expected) {
+    protected void assertFieldEquals(Fields.Book field, Object expected) {
         assertFieldBase(field, expected, false,
                 (String msg, Object exp, Object res) -> AssertionErrors.assertEquals(msg, exp, res));
     }
 
-    public void assertFieldNotEquals(Fields.Book field, Object expected) {
+    protected void assertFieldNotEquals(Fields.Book field, Object expected) {
         assertFieldBase(field, expected, false,
                 (String msg, Object exp, Object res) -> AssertionErrors.assertEquals(msg, exp, res));
     }
 
-    public void assertFieldEqualsDefault(Fields.Book field) {
+    protected void assertFieldEqualsDefault(Fields.Book field) {
         assertFieldBase(field, null, true,
                 (String msg, Object exp, Object res) -> AssertionErrors.assertEquals(msg, exp, res));
     }
