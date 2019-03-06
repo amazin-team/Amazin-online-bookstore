@@ -7,27 +7,27 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id = null;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id = null;
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     private String name;
     private String description;
-    private Integer ISBN;
-    private String picture_path;
+    private int ISBN;
+    private String picture;
     private String author;
     private String publisher;
-    private String sku;
-    private String inventory;
-    private String manufacter_price;
-    private String retail_price;
+    private int SKU;
+    private int inventory;
+    private double price;
 
 
     public String getName() {
@@ -46,20 +46,20 @@ public class Book {
         this.description = description;
     }
 
-    public Integer getISBN() {
+    public int getISBN() {
         return ISBN;
     }
 
-    public void setISBN(Integer ISBN) {
+    public void setISBN(int ISBN) {
         this.ISBN = ISBN;
     }
 
-    public String getPicture_path() {
-        return picture_path;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setPicture_path(String picture_path) {
-        this.picture_path = picture_path;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public String getAuthor() {
@@ -78,52 +78,44 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public String getSku() {
-        return sku;
+    public int getSKU() {
+        return SKU;
     }
 
-    public void setSku(String sku) {
-        this.sku = sku;
+    public void setSKU(int SKU) {
+        this.SKU = SKU;
     }
 
-    public String getInventory() {
+    public int getInventory() {
         return inventory;
     }
 
-    public void setInventory(String inventory) {
+    public void setInventory(int inventory) {
         this.inventory = inventory;
     }
 
-    public String getManufacter_price() {
-        return manufacter_price;
+    public double getPrice() {
+        return price;
     }
 
-    public void setManufacter_price(String manufacter_price) {
-        this.manufacter_price = manufacter_price;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public String getRetail_price() {
-        return retail_price;
-    }
-
-    public void setRetail_price(String retail_price) {
-        this.retail_price = retail_price;
-    }
 
     public Book(){}
 
-    public Book(Integer id, String name, String description, Integer ISBN, String picture_path, String author, String publisher, String sku, String inventory, String manufacter_price, String retail_price) {
+    public Book(Long id,String name, String description, int ISBN, String picture, String author, String publisher, int SKU, int inventory, double price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.ISBN = ISBN;
-        this.picture_path = picture_path;
+        this.picture = picture;
         this.author = author;
         this.publisher = publisher;
-        this.sku = sku;
+        this.SKU = SKU;
         this.inventory = inventory;
-        this.manufacter_price = manufacter_price;
-        this.retail_price = retail_price;
+        this.price = price;
     }
 
     @Override
@@ -133,13 +125,12 @@ public class Book {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", ISBN=" + ISBN +
-                ", picture_path='" + picture_path + '\'' +
+                ", picture='" + picture + '\'' +
                 ", author='" + author + '\'' +
                 ", publisher='" + publisher + '\'' +
-                ", sku='" + sku + '\'' +
+                ", SKU='" + SKU + '\'' +
                 ", inventory='" + inventory + '\'' +
-                ", manufacter_price='" + manufacter_price + '\'' +
-                ", retail_price='" + retail_price + '\'' +
+                ", price='" + price + '\'' +
                 '}';
     }
 
