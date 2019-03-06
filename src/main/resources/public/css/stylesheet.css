@@ -1,7 +1,7 @@
 form  { display: table;      }
 form > p     { display: table-row;  }
 label { display: table-cell; }
-input, textarea { display: table-cell; } 
+input, textarea { display: table-cell; }
 .header {
     display: flex;
     flex-direction: column;
@@ -14,9 +14,13 @@ input, textarea { display: table-cell; }
     margin: 0;
 }
 
-textarea { 
-    margin: 0; 
-    padding: 0; 
-    display: block; 
-    font-size: 100%; 
-  } 
+textarea {
+    margin: 0;
+    padding: 0;
+    display: block;
+    font-size: 100%;
+}
+
+.sticky-footer {
+  width:100%;
+}
