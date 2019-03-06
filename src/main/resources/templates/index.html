@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <title>Amazin: The place where your books reside</title>
@@ -17,7 +17,7 @@
         <h2 th:case="null">Book Catalogue is Empty!</h2>
         <div th:case="*">
             <h2>Book Catalogue</h2>
-            <table>
+            <table id="book_table">
                 <thead>
                     <tr>
                         <th>Name</th>
