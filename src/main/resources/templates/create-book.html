@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Create Book Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="css/stylesheet.css">
+</head>
+
+<body>
+    <h1>Create Book</h1>
+    <form action="#" th:action="@{/addbook}" th:object="${book}" method="post">
+        <p>
+            <label for="name">Name:</label>
+            <input type="text" th:field="*{name}">
+        </p>
+        <p>
+            <label for="description">Description:</label>
+            <textarea name="description" th:field="*{description}" cols="17" rows="5"></textarea>
+        </p>
+        <p>
+            <label for="ISBN">ISBN:</label>
+            <input type="text" th:field="*{ISBN}">
+        </p>
+        <p>
+            <label for="picture">Picture:</label>
+            <input type="file" th:field="*{picture}">
+        </p>
+        <p>
+            <label for="author">Author:</label>
+            <input type="text" th:field="*{author}">
+        </p>
+        <p>
+            <label for="publisher">Publisher:</label>
+            <input type="text" th:field="*{publisher}">
+        </p>
+        <p>
+            <label for="sku">SKU:</label>
+            <input type="text" th:field="*{SKU}">
+        </p>
+        <p>
+            <label for="inventory">Inventory:</label>
+            <input type="text" th:field="*{inventory}">
+        </p>
+        <p>
+            <label for="price">Price:</label>
+            <input type="text" th:field="*{price}">
+        </p>
+        <p><input id="submit" type="submit" value="Create Book" /> <input type="reset" value="Reset" /></p>
+    </form>
+</body>
+
+</html>

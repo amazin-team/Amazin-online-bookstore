@@ -29,8 +29,8 @@ public class BookController {
         if (result.hasErrors()) {
             return "create-book";
         }
-        Book new_Book = new Book(book.getName(), book.getDescription(), book.getISBN(), book.getPicture_path(),
-                book.getAuthor(), book.getPublisher(), book.getSku(), book.getInventory(), book.getPrice());
+        Book new_Book = new Book(book.getName(), book.getDescription(), book.getISBN(), book.getPicture(),
+                book.getAuthor(), book.getPublisher(), book.getSKU(), book.getInventory(), book.getPrice());
         repository.save(new_Book);
         model.addAttribute("new_book", new_Book);
         return "bookResult";
@@ -38,7 +38,7 @@ public class BookController {
 
     @GetMapping("/book/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        Book book = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        Book book = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
 
         model.addAttribute("book", book);
         return "update-book";
@@ -48,11 +48,11 @@ public class BookController {
     public String updateBook(@PathVariable("id") long id, @Valid Book book, BindingResult result, Model model) {
         if (result.hasErrors()) {
             book.setId(id);
-            return "update-user";
+            return "update-book";
         }
 
         repository.save(book);
-        model.addAttribute("users", repository.findAll());
+        model.addAttribute("books", repository.findAll());
         return "index";
     }
 

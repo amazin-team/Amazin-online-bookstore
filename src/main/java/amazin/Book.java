@@ -54,11 +54,11 @@ public class Book {
         this.ISBN = ISBN;
     }
 
-    public String getpicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setpicture(String picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
@@ -129,7 +129,7 @@ public class Book {
                 ", publisher='" + publisher + '\'' +
                 ", SKU='" + SKU + '\'' +
                 ", inventory='" + inventory + '\'' +
-                ", manufacter_price='" + price + '\'' +
+                ", price='" + price + '\'' +
                 '}';
     }
 
