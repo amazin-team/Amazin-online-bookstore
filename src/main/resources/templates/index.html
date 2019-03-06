@@ -1,31 +1,38 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-    <title>Amzin</title>
+    <title>Amazin: The place where your books reside</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="/css/stylesheet.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
+    <div class="header">
+        <h1 id="logo">AMAZIN</h1>
+        <p>The place where your books reside</p>
+    </div>
     <div th:switch="${books}">
         <h2 th:case="null">Book Catalogue is Empty!</h2>
-            <div th:case="*">
-                <h2>Book Catalogue</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Author</th>
-                            <th>Publisher</th>
-                            <th>ISBN</th>
-                            <th>SKU</th>
-                            <th>Inventory</th>
-                            <th>Price</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <div th:case="*">
+            <h2>Book Catalogue</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>ISBN</th>
+                        <th>SKU</th>
+                        <th>Inventory</th>
+                        <th>Price</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <tr th:each="book : ${books}">
                         <td th:text="${book.name}"></td>
                         <td th:text="${book.description}"></td>
@@ -40,8 +47,9 @@
                     </tr>
                 </tbody>
             </table>
-        </div>      
+        </div>
         <p><a href="/addbook">Create a new book</a></p>
     </div>
 </body>
+
 </html>
