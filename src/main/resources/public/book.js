@@ -1,32 +1,31 @@
 $(document).ready(function() {
-    $( ".display_book" ).click(function() {
+    $(".display_book").click(function() {
         $.ajax({
             url: "./book.json"
         }).then(function (data) {
-            $('#title').empty().append("book");
+            $('#title').empty().append("Available books");
             let book = data._embedded.book;
             if (book.length === 0 ){
                 $('.content').empty().append("No books were found");
             }
             else{
                 let book_content= "";
-                for(let i =0 ; i<book.length ;i ++){
+                for(let i =0 ; i < book.length ; i++){
                     console.log(book[i]);
-                    book_content += `<br>${book[i].toString()} <br>`;
+                    book_content += `<br>${book[i].toString()}<br>`;
                 }
-                $('.content').empty().html(book_content);
+                $('.content').empty().append(book_content);
             }
         });
         return false;
     });
 
-
-    $( ".create_book" ).click(function() {
-
+    $(".create_book").click(function() {
         $.ajax({
             url: "./book"
         }).then(function(data){
-            $('.content').empty().html(data);
+            $('#title').empty();
+            $('.content').empty().append(data);
         });
         return false;
     });
