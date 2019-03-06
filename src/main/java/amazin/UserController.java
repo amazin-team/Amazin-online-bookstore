@@ -24,8 +24,13 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String register() {
+         public String register() {
         return "register";
+    }
+
+    @GetMapping("/forgot-password")
+    public String forgotPassword() {
+        return "forgot-password";
     }
 
 
