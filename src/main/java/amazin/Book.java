@@ -105,7 +105,8 @@ public class Book {
 
     public Book(){}
 
-    public Book(String name, String description, int ISBN, String picture, String author, String publisher, int SKU, int inventory, double price) {
+    public Book(Long id,String name, String description, int ISBN, String picture, String author, String publisher, int SKU, int inventory, double price) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.ISBN = ISBN;

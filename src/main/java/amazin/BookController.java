@@ -19,7 +19,7 @@ public class BookController {
     BookRepository repository;
 
     @GetMapping("/addbook")
-    public String bookForm(Model model) {
+    public String addBookForm(Model model) {
         model.addAttribute("book", new Book());
         return "create-book";
     }
@@ -29,23 +29,22 @@ public class BookController {
         if (result.hasErrors()) {
             return "create-book";
         }
-        Book new_Book = new Book(book.getName(), book.getDescription(), book.getISBN(), book.getPicture(),
-                book.getAuthor(), book.getPublisher(), book.getSKU(), book.getInventory(), book.getPrice());
-        repository.save(new_Book);
-        model.addAttribute("new_book", new_Book);
-        return "bookResult";
+
+        repository.save(book);
+        model.addAttribute("books", repository.findAll());
+        return "index";
     }
 
-    @GetMapping("/book/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String updateBookForm(@PathVariable("id") Long id, Model model) {
         Book book = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
 
         model.addAttribute("book", book);
         return "update-book";
     }
 
-    @PostMapping("/book/update/{id}")
-    public String updateBook(@PathVariable("id") long id, @Valid Book book, BindingResult result, Model model) {
+    @PostMapping("/update/{id}")
+    public String updateBook(@PathVariable("id") Long id, @Valid Book book, BindingResult result, Model model) {
         if (result.hasErrors()) {
             book.setId(id);
             return "update-book";
@@ -56,7 +55,7 @@ public class BookController {
         return "index";
     }
 
-    @GetMapping("book/delete/{id}")
+    @GetMapping("delete/{id}")
     public String deleteBook(@PathVariable("id") Long id, Model model) {
         Book book = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
         repository.delete(book);

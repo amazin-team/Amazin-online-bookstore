@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Amzin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+    <div th:switch="${books}">
+        <h2 th:case="null">Book Catalogue is Empty!</h2>
+            <div th:case="*">
+                <h2>Book Catalogue</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Author</th>
+                            <th>Publisher</th>
+                            <th>ISBN</th>
+                            <th>SKU</th>
+                            <th>Inventory</th>
+                            <th>Price</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="book : ${books}">
+                        <td th:text="${book.name}"></td>
+                        <td th:text="${book.description}"></td>
+                        <td th:text="${book.author}"></td>
+                        <td th:text="${book.publisher}"></td>
+                        <td th:text="${book.ISBN}"></td>
+                        <td th:text="${book.SKU}"></td>
+                        <td th:text="${book.Inventory}"></td>
+                        <td th:text="${book.Price}"></td>
+                        <td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>
+                        <td><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>      
+        <p><a href="/addbook">Create a new book</a></p>
+    </div>
+</body>
+</html>
