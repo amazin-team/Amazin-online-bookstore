@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Create Book Form</title>
+    <title>Edit Book Form</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="css/stylesheet.css">
 </head>
 
 <body>
-    <h1>Create Book</h1>
+    <h1>Edit Book</h1>
     <form action="#" th:action="@{/update/{id}(id=${book.id})}" th:object="${book}" method="post">
         <p>
             <label for="name">Name:</label>
