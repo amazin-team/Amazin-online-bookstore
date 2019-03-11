@@ -32,7 +32,7 @@ public class BookController {
 
         repository.save(book);
         model.addAttribute("books", repository.findAll());
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
