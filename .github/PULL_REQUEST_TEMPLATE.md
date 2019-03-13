@@ -1,11 +1,3 @@
----
-assignees:
- - abungay
- - Hajar1
- - zaidoon1
- - LauraMachado21
- - MohamedZalat
----
 ## Description of changes
 Please provide a meaningful description of the changes introduced by this pull request here.
 
