@@ -51,7 +51,7 @@ public class BookControllerTest {
 
         assertEquals(BookController.VIEW_CREATE_BOOK, view);
 
-        Book formObject = (Book) model.asMap().get(BookController.MODEL_ATTRIBUTE_BOOk);
+        Book formObject = (Book) model.asMap().get(BookController.MODEL_ATTRIBUTE_BOOK);
 
         assertNull(formObject.getId());
         assertNull(formObject.getDescription());
@@ -80,7 +80,7 @@ public class BookControllerTest {
 
         assertEquals(BookController.VIEW_UPDATE_BOOK, view);
 
-        Book formObject = (Book) model.asMap().get(BookController.MODEL_ATTRIBUTE_BOOk);
+        Book formObject = (Book) model.asMap().get(BookController.MODEL_ATTRIBUTE_BOOK);
 
         assertEquals(updated.getId(), formObject.getId());
         assertEquals(updated.getDescription(), formObject.getDescription());

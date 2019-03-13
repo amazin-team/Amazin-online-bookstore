@@ -22,7 +22,7 @@ import amazin.service.BookService;
 public class BookController {
     public static final String VIEW_CREATE_BOOK = "create-book";
     public static final String VIEW_UPDATE_BOOK = "update-book";
-    public static final Object MODEL_ATTRIBUTE_BOOk = "book";
+    public static final Object MODEL_ATTRIBUTE_BOOK = "book";
 
     @Autowired
     private final BookService bookService;
