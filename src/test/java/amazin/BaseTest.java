@@ -16,7 +16,6 @@ public class BaseTest {
     protected static String DEFAULT_PICTURE = "/the-test.jpg";
     protected static String DEFAULT_AUTHOR = "Moe";
     protected static String DEFAULT_PUBLISHER = "Amazin Publishers";
-    protected static int DEFAULT_SKU = 66;
     protected static int DEFAULT_INVENTORY = 6666;
     protected static double DEFAULT_PRICE = 66.66;
 

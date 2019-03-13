@@ -50,7 +50,7 @@ public class BookTest extends BaseTest {
 
     @Test
     public void testSetISBN() {
-        int TEST = 400;
+        String TEST = "1111111111111";
         testSetField(Fields.Book.ISBN, TEST);
     }
 
