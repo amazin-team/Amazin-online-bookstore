@@ -1,4 +1,5 @@
 # Amazin
+[![Build Status](https://travis-ci.org/amazin-team/Amazin-online-bookstore.svg?branch=master)](https://travis-ci.org/amazin-team/Amazin-online-bookstore)
 
 Amazin is an [Amazon] inspired online book store written in Java, using the [Spring Web MVC] framework and [JPA].
 
