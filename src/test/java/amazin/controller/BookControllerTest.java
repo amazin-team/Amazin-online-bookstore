@@ -113,7 +113,6 @@ public class BookControllerTest {
         String view = controller.updateBook(BookTestUtil.ID, formObject, result, attributes);
 
         verify(repo, times(1)).save(formObject);
-        verify(repo, times(1)).findAll();
         verify(repo, times(1)).findById(BookTestUtil.ID);
         verifyNoMoreInteractions(repo);
 
@@ -128,7 +127,6 @@ public class BookControllerTest {
         String view = controller.deleteBook(BookTestUtil.ID, attributes);
 
         verify(repo, times(1)).deleteById(BookTestUtil.ID);
-        verify(repo, times(1)).findAll();
         verifyNoMoreInteractions(repo);
 
         String expectedView = "redirect:/";
