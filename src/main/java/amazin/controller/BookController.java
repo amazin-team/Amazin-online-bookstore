@@ -44,7 +44,6 @@ public class BookController {
         }
 
         bookService.create(book);
-        model.addAttribute("books", bookService.getAll());
         return "redirect:/";
     }
 
@@ -68,14 +67,12 @@ public class BookController {
         }
 
         bookService.update(book);
-        model.addAttribute("books", bookService.getAll());
         return "redirect:/";
     }
 
     @GetMapping("delete/{id}")
     public String deleteBook(@PathVariable("id") Long id, Model model) {
         bookService.delete(id);
-        model.addAttribute("books", bookService.getAll());
         return "redirect:/";
     }
 

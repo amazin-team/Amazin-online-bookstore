@@ -11,11 +11,11 @@ import amazin.repository.BookRepository;
 public class ApplicationController {
 
     @Autowired
-    BookRepository repository;
+    BookRepository bookRepository;
 
     @GetMapping({ "/" })
     public String index(Model model) {
-        model.addAttribute("books", repository.findAll());
+        model.addAttribute("books", bookRepository.findAll());
         return "index";
     }
 
