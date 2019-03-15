@@ -6,7 +6,7 @@ public class BookTest extends BaseTest {
 
     @Test
     public void testBook() {
-        for(Fields.Book field : Fields.Book.values())
+        for (Fields.Book field : Fields.Book.values())
             assertFieldEqualsDefault(field);
     }
 
@@ -50,7 +50,7 @@ public class BookTest extends BaseTest {
 
     @Test
     public void testSetISBN() {
-        int TEST = 400;
+        String TEST = "1111111111111";
         testSetField(Fields.Book.ISBN, TEST);
     }
 
@@ -85,17 +85,6 @@ public class BookTest extends BaseTest {
     public void testSetPublisher() {
         String TEST = "400";
         testSetField(Fields.Book.PUBLISHER, TEST);
-    }
-
-    @Test
-    public void testGetSKU() {
-        assertFieldEqualsDefault(Fields.Book.SKU);
-    }
-
-    @Test
-    public void testSetSKU() {
-        int TEST = 400;
-        testSetField(Fields.Book.SKU, TEST);
     }
 
     @Test

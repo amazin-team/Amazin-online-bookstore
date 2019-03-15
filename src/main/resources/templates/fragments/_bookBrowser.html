@@ -10,7 +10,6 @@
                 <th>Author</th>
                 <th>Publisher</th>
                 <th>ISBN</th>
-                <th>SKU</th>
                 <th>Inventory</th>
                 <th>Price</th>
                 <th>Edit</th>
@@ -24,7 +23,6 @@
                 <td th:text="${book.author}"></td>
                 <td th:text="${book.publisher}"></td>
                 <td th:text="${book.ISBN}"></td>
-                <td th:text="${book.SKU}"></td>
                 <td th:text="${book.Inventory}"></td>
                 <td th:text="${book.Price}"></td>
                 <td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>
