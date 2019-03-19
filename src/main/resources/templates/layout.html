@@ -75,14 +75,14 @@
 
                     <!-- Nav Item - Alerts -->
                     <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link" href="/addbook" role="button">
+                        <a class="nav-link" href="/addbook" role="button" data-toggle="tooltip" title="Create a new book">
                             <i class="fas fa-plus"></i>
                         </a>
                     </li>
 
                     <!-- Nav Item - Messages -->
                     <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="tooltip" title="View shopping cart">
                             <i class="fas fa-shopping-cart"></i>
                             <!-- Counter - Messages -->
                             <!--<span class="badge badge-danger badge-counter">7</span>-->
@@ -104,12 +104,8 @@
                                 Profile
                             </a>
                             <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
+                                Recommendations
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -157,7 +153,7 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" href="login">Logout</a>
             </div>
         </div>
     </div>
@@ -174,6 +170,7 @@
 <script src="/webjars/startbootstrap-sb-admin-2/4.0.2/js/sb-admin-2.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="/js/layout.js"></script>
 <th:block layout:fragment="script"></th:block>
 </body>
 
