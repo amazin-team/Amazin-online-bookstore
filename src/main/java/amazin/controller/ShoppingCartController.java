@@ -70,6 +70,7 @@ public class ShoppingCartController {
             HashMap<String,Object> item = new HashMap<>();
             item.put("book", b);
             item.put("quantity", 2);
+            item.put("subtotal", 2*b.getPrice());
             items.add(item);
         }
 
