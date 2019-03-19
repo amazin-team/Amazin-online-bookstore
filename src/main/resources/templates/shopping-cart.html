@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Shopping Cart</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<div layout:fragment="content">
+<h1>Shopping Cart</h1>
+<div th:if="${items == null or items.empty}">
+    Shopping Cart is Empty!
+</div>
+<div th:unless="${items == null or items.empty}">
+    <br>
+    <h4 th:text="${#arrays.length(items) + ' ITEMS'}"></h4>
+    <hr>
+    <div th:each="item : ${items}" class="row-xs-height row-edge-unpadded">
+        <div class="cart-item-img col-xs-height col-xs-4 col-md-4 col-lg-3 col-top">
+            <img src="https://via.placeholder.com/155x200">
+        </div>
+        <div class="cart-item-info col-xs-height col-xs-8 col-md-8 col-lg-9 col-top">
+
+        </div>
+    </div>
+</div>
+</div>
+
+<th:block layout:fragment="script">
+    <script src="/js/shopping_cart.js"></script>
+</th:block>
+</body>
+</html>
