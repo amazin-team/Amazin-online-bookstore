@@ -16,7 +16,15 @@ input, textarea { display: table-cell; }
 
 textarea { 
     margin: 0; 
-    padding: 0; 
-    display: block; 
+    padding: 0;  
     font-size: 100%; 
-  } 
+  }
+
+#book_table {
+    text-align: center;
+}
+
+span{
+    padding-left: 15px;
+    color:red;
+  }
