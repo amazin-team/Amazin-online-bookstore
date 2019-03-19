@@ -19,4 +19,24 @@ public class ApplicationController {
         return "index";
     }
 
+    @GetMapping({"/login"})
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping({"/register"})
+         public String register(){
+        return "registration";
+    }
+
+    @GetMapping({"/admin/register"})
+    public String registerAdmin(){
+        return "registration-admin";
+    }
+
+    @GetMapping({"/forgot-password"})
+    public String forgotPassword(){
+        return "forgot-password";
+    }
+
 }
