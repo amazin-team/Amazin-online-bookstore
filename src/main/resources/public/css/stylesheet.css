@@ -81,3 +81,11 @@ body {
     border-radius: 4px;
     cursor: pointer;
 }
+
+.row-xs-height {
+    display: table-row;
+}
+
+.row-xs-height.row-edge-unpadded .col-xs-height:first-of-type {
+    padding-left: 0;
+  }

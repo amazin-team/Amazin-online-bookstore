@@ -20,23 +20,21 @@ public class ShoppingCart {
     private Long id = null;
 
     @Column(name="cartItems")
-    private List<Map<String,Object>> items;
+    private ArrayList<HashMap<String,Object>> items;
 
     public ShoppingCart() {
-        this.items = new ArrayList<Map<String,Object>>();
+        this.items = new ArrayList<>();
     }
 
-    public void addBook(Book book, int amount){
-        HashMap<String,Object> item = new HashMap<String,Object>();
-        item.put("bookId", book.getId());
-        item.put("quantity", amount);
+    public ArrayList<HashMap<String,Object>> getItems() {
+        return this.items;
+    }
 
+    public void addItem(HashMap<String,Object> item){
         this.items.add(item);
     }
 
-    public List<Map<String,Object>> getBooks() {
-        return this.items;
-    }
+
 
 
 }
