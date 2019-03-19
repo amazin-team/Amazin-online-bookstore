@@ -26,5 +26,9 @@ textarea {
 
 span{
     padding-left: 15px;
-    color:red;
-  }
+}
+
+.error-page-container{
+    height:100vh;
+    margin-top: 15vh;
+}
