@@ -49,6 +49,36 @@ html,
 body {
     height: 100vh;
     color: #3b3d44;
+
+}
+
+.cart-item-name{
+    font-weight: 400;
+    font-size: 1em;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: inherit;
+}
+
+.shopping-cart-hr{
+    margin-top: 0;
+    border-top: 4px solid rgba(0,0,0,.1);
+}
+
+.cart-item-price{
+    margin: 8px 0;
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.cart-item-detail, .cart-item-control {
+    font-size: 0.7em;
+}
+
+.cart-item-controls{
+    list-style-type: none;
+    padding-left:0;
 }
 
 .book-form>input,
@@ -80,6 +110,11 @@ body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.cart-item-control{
+    display:inline-block;
+    text-decoration: underline;
 }
 
 .row-xs-height {
