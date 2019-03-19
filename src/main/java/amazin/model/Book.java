@@ -7,8 +7,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import amazin.Launcher;
-
 @Entity
 public class Book {
 
@@ -130,11 +128,6 @@ public class Book {
         return "Book{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", ISBN="
                 + ISBN + ", picture='" + picture + '\'' + ", author='" + author + '\'' + ", publisher='" + publisher
                 + '\'' + ", inventory='" + inventory + '\'' + ", price='" + price + '\'' + '}';
-    }
-
-    public static void main(String[] args) {
-        Launcher launcher = new Launcher();
-        launcher.launch();
     }
 
     @Override
