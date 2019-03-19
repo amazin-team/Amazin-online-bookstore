@@ -16,7 +16,19 @@ header {
 
 textarea { 
     margin: 0; 
-    padding: 0; 
-    display: block; 
+    padding: 0;  
     font-size: 100%; 
-  } 
+  }
+
+#book_table {
+    text-align: center;
+}
+
+span{
+    padding-left: 15px;
+}
+
+.error-page-container{
+    height:100vh;
+    margin-top: 15vh;
+}

@@ -12,39 +12,43 @@
     <form action="#" th:action="@{/addbook}" th:object="${book}" method="post">
         <p>
             <label for="name">Name:</label>
-            <input id="name" type="text" th:field="*{name}">
+            <input id="name" type="text" minlength="2" th:field="*{name}">
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </p>
         <p>
             <label for="description">Description:</label>
-            <textarea id="description" name="description" th:field="*{description}" cols="17" rows="5"></textarea>
+            <textarea id="description" name="description" minlength="2" th:field="*{description}" cols="17" rows="5"></textarea>
+            <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
         </p>
         <p>
             <label for="ISBN">ISBN:</label>
-            <input id="ISBN" type="text" th:field="*{ISBN}">
+            <input id="ISBN" type="text" minlength="13" maxlength="13" th:field="*{ISBN}">
+            <span class="error" th:if="${#fields.hasErrors('ISBN')}" th:errors="*{ISBN}"></span>
         </p>
         <p>
             <label for="picture">Picture:</label>
-            <input  id="picture" type="file" th:field="*{picture}">
+            <input id="picture" type="file" th:field="*{picture}">
+            <span class="error" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></span>
         </p>
         <p>
             <label for="author">Author:</label>
-            <input id="author" type="text" th:field="*{author}">
+            <input id="author" type="text" minlength="2" th:field="*{author}">
+            <span class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
         </p>
         <p>
             <label for="publisher">Publisher:</label>
-            <input id="publisher" type="text" th:field="*{publisher}">
-        </p>
-        <p>
-            <label for="sku">SKU:</label>
-            <input id="sku" type="text" th:field="*{SKU}">
+            <input id="publisher" type="text" minlength="2" th:field="*{publisher}">
+            <span class="error" th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span>
         </p>
         <p>
             <label for="inventory">Inventory:</label>
-            <input id="inventory" type="text" th:field="*{inventory}">
+            <input id="inventory" type="number" min="0" th:field="*{inventory}">
+            <span class="error" th:if="${#fields.hasErrors('inventory')}" th:errors="*{inventory}"></span>
         </p>
         <p>
             <label for="price">Price:</label>
-            <input id="price" type="text" th:field="*{price}">
+            <input id="price" type="number" step="0.01" min="0" th:field="*{price}">
+            <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
         </p>
         <p><input id="submit" type="submit" value="Create Book" /> <input type="reset" value="Reset" /></p>
     </form>
