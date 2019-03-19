@@ -24,11 +24,15 @@ textarea {
     text-align: center;
 }
 
-span{
+span {
     padding-left: 15px;
 }
 
-.error-page-container{
+.tooltip {
+    top: 0;
+}
+
+.error-page-container {
     height:100vh;
     margin-top: 15vh;
 }
