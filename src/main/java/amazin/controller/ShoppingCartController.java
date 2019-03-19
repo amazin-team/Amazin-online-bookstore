@@ -21,10 +21,11 @@ import java.util.*;
 @SessionAttributes("cart")
 public class ShoppingCartController {
 
-    ShoppingCartService cartService;
+    @Autowired
+    ShoppingCartService shoppingCartService;
 
     @Autowired
-    ShoppingCartRepository cartRepository;
+    ShoppingCartRepository shoppingCartRepository;
 
     @Autowired
     BookRepository bookRepository;
@@ -32,10 +33,10 @@ public class ShoppingCartController {
     public static final String VIEW_SHOPPING_CART = "shopping-cart";
 
 
-    @PostMapping("/addToCart")
-    public String addToCart(@RequestParam long cartId, @ModelAttribute @Valid Book book,  Model model){
+    @PostMapping("/addToCart/{id}")
+    public String addToCart(@PathVariable("id") Long bookId,  Model model){
         int amount = 1;
-        cartService.addBook(cartId, book);
+        shoppingCartService.addBook(bookId);
 
         return "index";
 
@@ -74,7 +75,10 @@ public class ShoppingCartController {
             items.add(item);
         }
 
+        double total = shoppingCartService.calculateTotal(items);
+
         model.addAttribute("items", items);
+        model.addAttribute("total", total);
 
         return VIEW_SHOPPING_CART;
     }
