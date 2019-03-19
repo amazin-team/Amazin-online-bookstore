@@ -24,22 +24,25 @@
             </div>
             <div class="cart-item-info col-xs-height col-xs-8 col-md-8 col-lg-9 col-top">
                 <div class="cart-item-name" th:text="${item.book.name}"></div>
-                <div class="cart-item-price" th:text="'$' + ${item.book.price} + ' CAD'"></div>
+                <div class="cart-item-price" th:text="'$' + ${#numbers.formatDecimal(item.book.price,1,2)} + ' CAD'"></div>
                 <div class="cart-item-detail" th:text="'Author: ' + ${item.book.author}"></div>
                 <div class="cart-item-detail" th:text="'ISBN: ' + ${item.book.ISBN}"></div>
-                <div class="cart-item-detail" th:text="'Item Price: ' + ${item.book.price}"></div>
-                <div class="cart-item-detail" th:text="'Subtotal: ' + ${item.subtotal}"></div>
+                <div class="cart-item-detail" th:text="'Item Price: $' + ${#numbers.formatDecimal(item.book.price,1,2)}"></div>
+                <div class="cart-item-detail" th:text="'Subtotal: $' + ${#numbers.formatDecimal(item.subtotal,1,2)}"></div>
                 <div class="cart-item-detail" th:text="'Qty: ' + ${item.quantity}"></div>
 
                 <ul class="cart-item-controls">
                     <li class="cart-item-control">Edit</li>
                     <li class="cart-item-control">Remove</li>
                 </ul>
-
             </div>
             </div>
         <hr>
     </div>
+    <div class="cart-total col-md-6">
+        <h4 th:text="'TOTAL: $' + ${#numbers.formatDecimal(total,1,2)} "></h4>
+    </div>
+
 </div>
 </div>
 
