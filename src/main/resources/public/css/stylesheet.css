@@ -9,16 +9,24 @@ input, textarea { display: table-cell; }
     justify-content: center;
 }
 
-#logo {
-    font-size: 90px;
-    margin: 0;
+#icon {
+    display: block;
+    margin-left: 1em;
+    margin-right: 1em;
+
+}
+
+#icon img{
+    margin: 10px;
+    width: 45px;
+    height: 45px;
 }
 
 textarea { 
     margin: 0; 
     padding: 0;  
     font-size: 100%; 
-  }
+}
 
 #book_table {
     text-align: center;
@@ -40,6 +48,11 @@ span {
 .error-input{
     font-size: 1rem;
     color: red;
+}
+
+.navbar-search {
+    margin-left: 2em;
+    margin-right: 2em;
 }
 
 html, body {

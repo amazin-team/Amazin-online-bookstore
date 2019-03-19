@@ -3,10 +3,6 @@
       layout:decorate="~{layout}">
     <body>
     <div layout:fragment="content">
-        <div class="header">
-            <h1 id="logo">AMAZIN</h1>
-            <p>The place where your books reside</p>
-        </div>
         <div th:replace=" ~{fragments/_bookBrowser.html :: dataTable} "></div>
     </div>
 
