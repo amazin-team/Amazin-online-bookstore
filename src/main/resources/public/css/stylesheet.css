@@ -42,6 +42,11 @@ span {
     margin-top: 15vh;
 }
 
+.error-input{
+    font-size: 1rem;
+    color: red;
+}
+
 html, body {
     height:100vh;
     color: #3b3d44;
