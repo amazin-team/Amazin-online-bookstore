@@ -7,7 +7,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 public class Book {
 
     @Id
@@ -16,23 +20,31 @@ public class Book {
     private Long id = null;
     @NotNull
     @Size(min = 2, message = "Book name should have at least 2 characters")
+    @Field
     private String name;
     @NotNull
     @Size(min = 2, message = "Book description should have at least 2 characters")
+    @Field
     private String description;
     @NotNull
     @Size(min = 13, max = 13, message = "ISBN should be 13 characters long") // ISBN is a 13 digit number
+    @Field
     private String ISBN;
+    @Field
     private String picture;
     @NotNull
     @Size(min = 2, message = "Book author should have at least 2 characters")
+    @Field
     private String author;
     @NotNull
     @Size(min = 1, message = "Book publisher should have at least 2 characters")
+    @Field
     private String publisher;
     @Min(0)
+    @Field
     private int inventory;
     @Min(0)
+    @Field
     private double price;
 
     public Long getId() {

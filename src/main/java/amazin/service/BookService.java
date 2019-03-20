@@ -50,7 +50,12 @@ public class BookService {
         return null;
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public Optional<Book> delete(Long id) {
+        Optional<Book> deleted = findById(id);
+        if (deleted.isPresent()) {
+            repository.delete(deleted.get());
+        }
+
+        return deleted;
     }
 }
