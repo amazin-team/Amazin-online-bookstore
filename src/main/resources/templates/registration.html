@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
 
@@ -37,24 +37,24 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
-                        <form class="user" action="/register" method="post">
+                        <form action="#" class="user" th:action="@{/register}" th:object="${user}" method="post">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="firstName" placeholder="First Name">
+                                    <input type="text" class="form-control form-control-user" id="firstName" th:field="*{firstName}" placeholder="First Name">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="lastName" placeholder="Last Name">
+                                    <input type="text" class="form-control form-control-user" id="lastName" th:field="*{lastName}" placeholder="Last Name">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="email" placeholder="Email Address">
+                                <input type="email" class="form-control form-control-user" id="email" th:field="*{email}" placeholder="Email Address">
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="password" class="form-control form-control-user" id="password" placeholder="Password">
+                                    <input type="password" class="form-control form-control-user" id="password" th:field="*{password}" placeholder="Password">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="password" class="form-control form-control-user" id="passwordConfirmation" placeholder="Repeat Password">
+                                    <input type="password" class="form-control form-control-user" id="passwordConfirmation" th:field="*{passwordConfirmation}" placeholder="Repeat Password">
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary btn-user btn-block">

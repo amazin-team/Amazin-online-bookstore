@@ -157,10 +157,17 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
+            <form id="logout-form" th:action="@{/logout}" method="post">
+                <div class="form-group">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                </div>
+            </form>
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login">Logout</a>
+                <button class="btn btn-primary modal-logout"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">Logout</button>
             </div>
         </div>
     </div>
