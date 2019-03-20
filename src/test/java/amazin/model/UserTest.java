@@ -73,7 +73,7 @@ public class UserTest {
 
     @Test
     public void setEmail() {
-        user.setFirstName("abc@gmail.com");
+        user.setEmail("abc@gmail.com");
 
         assertEquals("abc@gmail.com", user.getEmail());
     }
