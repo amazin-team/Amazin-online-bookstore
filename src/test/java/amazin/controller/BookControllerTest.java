@@ -1,7 +1,9 @@
 package amazin.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -9,19 +11,13 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.springframework.beans.MutablePropertyValues;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.support.BindingAwareModelMap;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import amazin.BookTestUtil;
 import amazin.model.Book;
@@ -51,16 +47,16 @@ public class BookControllerTest {
 
         assertEquals(BookController.VIEW_CREATE_BOOK, view);
 
-        Book formObject = (Book) model.asMap().get(BookController.MODEL_ATTRIBUTE_BOOK);
+        Book formModel = (Book) model.asMap().get(BookController.MODEL_ATTRIBUTE_BOOK);
 
-        assertNull(formObject.getId());
-        assertNull(formObject.getDescription());
-        assertNull(formObject.getAuthor());
-        assertNull(formObject.getPublisher());
-        assertNull(formObject.getISBN());
-        assertNull(formObject.getName());
-        assertEquals(formObject.getInventory(), 0);
-        assertEquals(formObject.getPrice(), 0, 0.1);
+        assertNull(formModel.getId());
+        assertNull(formModel.getDescription());
+        assertNull(formModel.getAuthor());
+        assertNull(formModel.getPublisher());
+        assertNull(formModel.getISBN());
+        assertNull(formModel.getName());
+        assertEquals(formModel.getInventory(), 0);
+        assertEquals(formModel.getPrice(), 0, 0.1);
     }
 
     @Test
@@ -80,62 +76,91 @@ public class BookControllerTest {
 
         assertEquals(BookController.VIEW_UPDATE_BOOK, view);
 
-        Book formObject = (Book) model.asMap().get(BookController.MODEL_ATTRIBUTE_BOOK);
+        Book formModel = (Book) model.asMap().get(BookController.MODEL_ATTRIBUTE_BOOK);
 
-        assertEquals(updated.getId(), formObject.getId());
-        assertEquals(updated.getDescription(), formObject.getDescription());
-        assertEquals(updated.getAuthor(), formObject.getAuthor());
-        assertEquals(updated.getPublisher(), formObject.getPublisher());
-        assertEquals(updated.getISBN(), formObject.getISBN());
-        assertEquals(updated.getName(), formObject.getName());
-        assertEquals(updated.getInventory(), formObject.getInventory());
-        assertEquals(updated.getPrice(), formObject.getPrice(), 0.1);
+        assertEquals(updated.getId(), formModel.getId());
+        assertEquals(updated.getDescription(), formModel.getDescription());
+        assertEquals(updated.getAuthor(), formModel.getAuthor());
+        assertEquals(updated.getPublisher(), formModel.getPublisher());
+        assertEquals(updated.getISBN(), formModel.getISBN());
+        assertEquals(updated.getName(), formModel.getName());
+        assertEquals(updated.getInventory(), formModel.getInventory());
+        assertEquals(updated.getPrice(), formModel.getPrice(), 0.1);
+    }
+
+    @Test
+    public void createBook() {
+        Book formModel = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
+                BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+
+        bookService.create(formModel);
+
+        ArgumentCaptor<Book> bookArgument = ArgumentCaptor.forClass(Book.class);
+        verify(repo, times(1)).save(bookArgument.capture());
+        verifyNoMoreInteractions(repo);
+
+        Book model = bookArgument.getValue();
+
+        assertNotNull(model.getId());
+        assertEquals(formModel.getDescription(), model.getDescription());
+        assertEquals(formModel.getAuthor(), model.getAuthor());
+        assertEquals(formModel.getPublisher(), model.getPublisher());
+        assertEquals(formModel.getISBN(), model.getISBN());
+        assertEquals(formModel.getName(), model.getName());
+        assertEquals(formModel.getInventory(), model.getInventory());
+        assertEquals(formModel.getPrice(), model.getPrice(), 0.1);
     }
 
     @Test
     public void updateBook() {
-        Book book = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
-                BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
 
-        Optional<Book> optionalBook = Optional.of(book);
-        when(bookService.findById(BookTestUtil.ID)).thenReturn(optionalBook);
-
-        Book formObject = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME_UPDATED,
+        Book formModel = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME_UPDATED,
                 BookTestUtil.DESCRIPTION_UPDATED, BookTestUtil.ISBN_UPDATED, BookTestUtil.PICTURE_UPDATED,
                 BookTestUtil.AUTHOR_UPDATED, BookTestUtil.PUBLISHER_UPDATED, BookTestUtil.INVENTORY_UPDATED,
                 BookTestUtil.PRICE_UPDATED);
 
-        MockHttpServletRequest mockRequest = new MockHttpServletRequest("POST", "/update/" + BookTestUtil.ID);
-        BindingResult result = bind(mockRequest, formObject);
+        Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
+                BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
 
-        RedirectAttributesModelMap attributes = new RedirectAttributesModelMap();
-        String view = controller.updateBook(BookTestUtil.ID, formObject, result, attributes);
+        Optional<Book> optionalModel = Optional.of(model);
+        when(repo.findById(formModel.getId())).thenReturn(optionalModel);
 
-        verify(repo, times(1)).save(formObject);
-        verify(repo, times(1)).findById(BookTestUtil.ID);
+        Book actual = bookService.update(formModel);
+
+        verify(repo, times(1)).save(formModel);
+        verify(repo, times(1)).findById(formModel.getId());
         verifyNoMoreInteractions(repo);
 
-        String expectedView = "redirect:/";
-        assertEquals(expectedView, view);
+        assertEquals(formModel.getDescription(), actual.getDescription());
+        assertEquals(formModel.getAuthor(), actual.getAuthor());
+        assertEquals(formModel.getPublisher(), actual.getPublisher());
+        assertEquals(formModel.getISBN(), actual.getISBN());
+        assertEquals(formModel.getName(), actual.getName());
+        assertEquals(formModel.getInventory(), actual.getInventory());
+        assertEquals(formModel.getPrice(), actual.getPrice(), 0.1);
     }
 
     @Test
-    public void deleteBook() {
-        RedirectAttributesModelMap attributes = new RedirectAttributesModelMap();
+    public void deletBook() {
+        Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
+                BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+        Optional<Book> optionalModel = Optional.of(model);
 
-        String view = controller.deleteBook(BookTestUtil.ID, attributes);
+        when(repo.findById(BookTestUtil.ID)).thenReturn(optionalModel);
 
-        verify(repo, times(1)).deleteById(BookTestUtil.ID);
+        Optional<Book> optionalActual = bookService.delete(BookTestUtil.ID);
+
+        assertTrue("Book must be present", optionalActual.isPresent());
+
+        Book actual = optionalActual.get();
+
+        verify(repo, times(1)).findById(BookTestUtil.ID);
+        verify(repo, times(1)).delete(model);
         verifyNoMoreInteractions(repo);
 
-        String expectedView = "redirect:/";
-        assertEquals(expectedView, view);
-    }
-
-    private BindingResult bind(HttpServletRequest request, Object formObject) {
-        WebDataBinder binder = new WebDataBinder(formObject);
-        binder.bind(new MutablePropertyValues(request.getParameterMap()));
-        return binder.getBindingResult();
+        assertEquals(model, actual);
     }
 }
