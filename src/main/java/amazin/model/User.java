@@ -1,6 +1,7 @@
 package amazin.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -9,12 +10,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
+    @NotNull
     @Column(unique = true)
     private String email;
+    @NotNull
     private String password;
+    @NotNull
     private String passwordConfirmation;
+    @NotNull
     @ManyToMany
     private Set<Role> roles;
 
