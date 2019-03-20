@@ -7,5 +7,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "user", path = "user.json")
 public interface UserRepository extends CrudRepository<User, Long> {
-    User findByUsername(String username);
+    User findByEmail(String email);
 }

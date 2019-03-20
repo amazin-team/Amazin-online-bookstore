@@ -3,7 +3,10 @@ package amazin.controller;
 import amazin.model.Book;
 import amazin.model.User;
 import amazin.service.SecurityService;
+import amazin.service.SecurityServiceImpl;
 import amazin.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,8 @@ public class UserController {
     @Autowired
     private SecurityService securityService;
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @GetMapping("/login")
     public String login(){
         return "login";
@@ -32,10 +37,15 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute User userForm, BindingResult result) {
+    public String register(@ModelAttribute User userForm, BindingResult result) {
         /** TODO */
+        logger.debug(userForm.getFirstName());
+        logger.debug(userForm.getLastName());
+        logger.debug(userForm.getEmail());
+        logger.debug(userForm.getPassword());
+        logger.debug(userForm.getPasswordConfirmation());
 
-        return "redirect:/";
+        return "redirect:/admin/register";
     }
 
     @GetMapping("/admin/register")

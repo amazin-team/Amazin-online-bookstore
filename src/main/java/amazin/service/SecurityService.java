@@ -1,6 +1,6 @@
 package amazin.service;
 
 public interface SecurityService {
-    String findLoggedInUsername();
-    void autoLogin(String username, String password);
+    String findLoggedInEmail();
+    void autoLogin(String email, String password);
 }

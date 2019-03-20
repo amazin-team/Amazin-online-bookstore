@@ -11,8 +11,7 @@ import javax.validation.constraints.Size;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
     @NotNull
     @Size(min = 2, message = "Book name should have at least 2 characters")
