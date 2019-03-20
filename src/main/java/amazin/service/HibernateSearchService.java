@@ -16,29 +16,18 @@ import java.util.List;
 @Service
 public class HibernateSearchService {
 
-    @Autowired
-    private final EntityManager centityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public HibernateSearchService(EntityManager entityManager) {
         super();
-        this.centityManager = entityManager;
-    }
-
-    public void initializeHibernateSearch() {
-
-        try {
-            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(centityManager);
-            fullTextEntityManager.createIndexer().startAndWait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        this.entityManager = entityManager;
     }
 
     @Transactional
     public List<Book> fuzzySearch(String searchTerm, String fieldName) {
 
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(centityManager);
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
         QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
         Query luceneQuery = qb.keyword().fuzzy().withEditDistanceUpTo(2).withPrefixLength(0).onFields(fieldName)
                 .matching(searchTerm).createQuery();
@@ -59,7 +48,7 @@ public class HibernateSearchService {
     @Transactional
     public List<Book> keywordSearch(String searchTerm, String fieldName) {
 
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(centityManager);
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
         QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
         Query luceneQuery = qb.keyword().onField(fieldName).matching(searchTerm).createQuery();
 
@@ -80,7 +69,7 @@ public class HibernateSearchService {
     @Transactional
     public List<Book> wildcardSearch(String searchTerm, String fieldName) {
 
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(centityManager);
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
         QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
 
         StringBuilder cleanedSearchTerm = new StringBuilder(searchTerm);
