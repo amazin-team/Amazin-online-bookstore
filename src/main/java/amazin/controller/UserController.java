@@ -1,9 +1,7 @@
 package amazin.controller;
 
-import amazin.model.Book;
 import amazin.model.User;
 import amazin.service.SecurityService;
-import amazin.service.SecurityServiceImpl;
 import amazin.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,46 +25,58 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/login")
-    public String login(){
+    public String login(Model model, String error, String logout) {
+        if (error != null)
+            model.addAttribute("error", "Invalid username or password.");
+
+        if (logout != null)
+            model.addAttribute("message", "Successfully logged out.");
+
         return "login";
     }
 
     @GetMapping("/register")
-    public String register(){
+    public String register(Model model){
+        model.addAttribute("user", new User());
+
         return "registration";
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User userForm, BindingResult result) {
-        /** TODO */
-        logger.debug(userForm.getFirstName());
-        logger.debug(userForm.getLastName());
-        logger.debug(userForm.getEmail());
-        logger.debug(userForm.getPassword());
-        logger.debug(userForm.getPasswordConfirmation());
+    public String register(@Valid @ModelAttribute User userForm, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "registration";
+        }
 
-        return "redirect:/admin/register";
+        /** TODO properly set errors back to user from validation, validate that password = password confirmation */
+
+        userService.save(userForm);
+        securityService.autoLogin(userForm.getEmail(), userForm.getPasswordConfirmation());
+
+        return "redirect:/";
     }
 
     @GetMapping("/admin/register")
-    public String registerAdmin(){
+    public String registerAdmin(Model model){
+        model.addAttribute("user", new User());
+
         return "registration-admin";
     }
 
     @PostMapping("/admin/register")
-    public String registerAdmin(@Valid @ModelAttribute User userForm, BindingResult result) {
+    public String registerAdmin(@Valid @ModelAttribute User userForm, BindingResult result, Model model) {
         /** TODO has extra token as opposed to normal register */
 
         return "redirect:/";
     }
 
     @GetMapping("/forgot-password")
-    public String forgotPassword(){
+    public String forgotPassword(Model model){
         return "forgot-password";
     }
 
     @PostMapping("/forgot-password")
-    public String forgotPassword(@Valid @ModelAttribute User userForm, BindingResult result) {
+    public String forgotPassword(@Valid @ModelAttribute User userForm, BindingResult result, Model model) {
         /** TODO */
 
         return "redirect:/";
