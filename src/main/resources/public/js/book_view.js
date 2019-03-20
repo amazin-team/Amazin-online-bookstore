@@ -5,3 +5,9 @@ $(document).ready(function () {
                 }
         });
 });
+
+function addBook(bookId) {
+        $.post("/addToCart/"+bookId, function(data){
+
+        });
+}

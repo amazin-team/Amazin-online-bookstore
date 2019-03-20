@@ -124,3 +124,8 @@ body {
 .row-xs-height.row-edge-unpadded .col-xs-height:first-of-type {
     padding-left: 0;
   }
+.add-cart-button{
+    color: #4e73df;
+    text-decoration: none;
+    background-color: transparent;
+}

@@ -28,7 +28,7 @@
                 <div class="cart-item-detail" th:text="'Author: ' + ${item.book.author}"></div>
                 <div class="cart-item-detail" th:text="'ISBN: ' + ${item.book.ISBN}"></div>
                 <div class="cart-item-detail" th:text="'Item Price: $' + ${#numbers.formatDecimal(item.book.price,1,2)}"></div>
-                <div class="cart-item-detail" th:text="'Subtotal: $' + ${#numbers.formatDecimal(item.subtotal,1,2)}"></div>
+                <div class="cart-item-detail" th:text="'Subtotal: $' + ${#numbers.formatDecimal(item.getSubtotal(),1,2)}"></div>
                 <div class="cart-item-detail" th:text="'Qty: ' + ${item.quantity}"></div>
 
                 <ul class="cart-item-controls">
