@@ -14,6 +14,7 @@
                 <th>Price</th>
                 <th>Edit</th>
                 <th>Delete</th>
+                <th>Add</th>
             </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
                 <td th:text="${book.Price}"></td>
                 <td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>
                 <td><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
+                <td><a class="add-cart-button" th:onclick="|addBook(${book.id})|">Add to Cart</a></td>
             </tr>
             </tbody>
         </table>

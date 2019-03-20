@@ -1,7 +1,11 @@
 package amazin.model;
 
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,31 +14,20 @@ import java.util.Map;
 /**
  * Created by lauramachado on 2019-03-18.
  */
-
-@Entity
 public class ShoppingCart {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Long id = null;
-
-    @Column(name="cartItems")
-    private ArrayList<HashMap<String,Object>> items;
+    private ArrayList<Item> items;
 
     public ShoppingCart() {
         this.items = new ArrayList<>();
     }
 
-    public ArrayList<HashMap<String,Object>> getItems() {
+    public ArrayList<Item> getItems() {
         return this.items;
     }
 
-    public void addItem(HashMap<String,Object> item){
+    public void addItem(Item item){
         this.items.add(item);
     }
-
-
-
 
 }
