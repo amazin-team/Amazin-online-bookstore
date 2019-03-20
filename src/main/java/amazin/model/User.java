@@ -1,5 +1,7 @@
 package amazin.model;
 
+import org.hibernate.search.annotations.Field;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -8,18 +10,27 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id", updatable = false, nullable = false)
     private Long id;
     @NotNull
+    @Column(name="user_first_name")
+    @Field
     private String firstName;
     @NotNull
+    @Column(name="user_last_name")
+    @Field
     private String lastName;
     @NotNull
-    @Column(unique = true)
+    @Field
+    @Column(unique = true, name="user_email")
     private String email;
     @NotNull
+    @Column(name="user_password")
+    @Field
     private String password;
     @NotNull
+    @Transient
     private String passwordConfirmation;
     @NotNull
     @ManyToMany

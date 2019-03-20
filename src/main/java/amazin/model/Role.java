@@ -1,5 +1,7 @@
 package amazin.model;
 
+import org.hibernate.search.annotations.Field;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -8,9 +10,12 @@ import java.util.Set;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "role_id", updatable = false, nullable = false)
     private Long id;
     @NotNull
+    @Column(name="role_name")
+    @Field
     private String name;
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
