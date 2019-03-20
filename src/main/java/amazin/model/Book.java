@@ -12,38 +12,47 @@ import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Indexed
+@Table(name="book")
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Long id = null;
+    @Column(name = "book_id", updatable = false, nullable = false)
+    private Long id;
     @NotNull
     @Size(min = 2, message = "Book name should have at least 2 characters")
+    @Column(name="book_name")
     @Field
     private String name;
     @NotNull
     @Size(min = 2, message = "Book description should have at least 2 characters")
+    @Column(name="book_description")
     @Field
     private String description;
     @NotNull
     @Size(min = 13, max = 13, message = "ISBN should be 13 characters long") // ISBN is a 13 digit number
+    @Column(name="book_isbn")
     @Field
     private String ISBN;
+    @Column(name="book_picture")
     @Field
     private String picture;
     @NotNull
     @Size(min = 2, message = "Book author should have at least 2 characters")
+    @Column(name="book_author")
     @Field
     private String author;
     @NotNull
     @Size(min = 1, message = "Book publisher should have at least 2 characters")
+    @Column(name="book_publisher")
     @Field
     private String publisher;
     @Min(0)
+    @Column(name="book_inventory")
     @Field
     private int inventory;
     @Min(0)
+    @Column(name="book_price")
     @Field
     private double price;
 
