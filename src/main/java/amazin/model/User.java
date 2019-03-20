@@ -1,12 +1,15 @@
 package amazin.model;
 
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
+@Indexed
+@Table(name="user_table")
 public class User {
 
     @Id
