@@ -24,7 +24,7 @@ public class UserTest {
 
     @Test
     public void getId() {
-        user.setId(new Long(1));
+        user.setId(1L);
 
         assertEquals(1L, user.getId().longValue());
     }
