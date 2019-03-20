@@ -27,8 +27,9 @@ public class BookService {
         return (List<Book>) repository.findAll();
     }
 
-    public void create(Book book) {
+    public Book create(Book book) {
         repository.save(book);
+        return book;
     }
 
     public Book update(Book updatedBook) {

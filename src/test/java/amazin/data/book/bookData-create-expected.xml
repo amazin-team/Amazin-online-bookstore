@@ -1,0 +1,5 @@
+<dataset>
+    <books id="1" name="Book Name" description="description" ISBN="1111111111111" picture="Picture" author= "Book Author" publisher= "Book Publisher" inventory="6" price= "25.68"/>
+    <books id="2" name="Book Name 2" description="description 2" ISBN="2222222222222" picture="Picture 2" author= "Book Author 2" publisher= "Book Publisher 2" inventory="62" price= "225.68"/>
+    <books id="3" name="Book Name 3" description="description 3" ISBN="3333333333333" picture="Picture 3" author= "Book Author 3" publisher= "Book Publisher 3" inventory="623" price= "3225.68"/>
+</dataset>

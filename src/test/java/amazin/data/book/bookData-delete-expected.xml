@@ -1,0 +1,3 @@
+<dataset>
+    <books id="2" name="Book Name 2" description="description 2" ISBN="2222222222222" picture="Picture 2" author= "Book Author 2" publisher= "Book Publisher 2" inventory="62" price= "225.68"/>
+</dataset>
