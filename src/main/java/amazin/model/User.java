@@ -35,7 +35,6 @@ public class User {
     @NotNull
     @Transient
     private String passwordConfirmation;
-    @NotNull
     @ManyToMany
     private Set<Role> roles;
 
