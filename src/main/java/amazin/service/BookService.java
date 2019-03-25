@@ -9,10 +9,15 @@ import org.springframework.stereotype.Service;
 import amazin.model.Book;
 import amazin.repository.BookRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class BookService {
 
     private final BookRepository repository;
+
+    private static final Logger logger = LoggerFactory.getLogger(BookService.class);
 
     @Autowired
     public BookService(BookRepository repository) {
@@ -29,6 +34,7 @@ public class BookService {
 
     public Book create(Book book) {
         repository.save(book);
+        logger.debug(String.format("Book: %s created successfully!", book.getName()));
         return book;
     }
 
@@ -46,6 +52,7 @@ public class BookService {
             book.setPrice(updatedBook.getPrice());
             book.setPublisher(updatedBook.getPublisher());
             repository.save(book);
+            logger.debug(String.format("Book: %s updated successfully!", book.getName()));
             return book;
         }
         return null;
@@ -55,6 +62,7 @@ public class BookService {
         Optional<Book> deleted = findById(id);
         if (deleted.isPresent()) {
             repository.delete(deleted.get());
+            logger.debug(String.format("Book: %s deleted successfully!", deleted.get().getName()));
         }
 
         return deleted;
