@@ -113,6 +113,7 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+	<!-- Actuator and micrometer facade for integration -->
     </dependencies>
     <build>
         <plugins>
