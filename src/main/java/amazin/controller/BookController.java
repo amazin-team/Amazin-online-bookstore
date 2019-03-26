@@ -111,8 +111,10 @@ public class BookController {
             // for now do nothing. Later we will throw an exception and display a message to
             // the user
         }
-        if (searchResults != null && searchResults.isEmpty()) model.addAttribute(MODEL_ATTRIBUTE_BOOK, null);
-        else model.addAttribute(MODEL_ATTRIBUTE_BOOK, searchResults);
+        if (searchResults != null && searchResults.isEmpty())
+            model.addAttribute(MODEL_ATTRIBUTE_BOOK, null);
+        else
+            model.addAttribute(MODEL_ATTRIBUTE_BOOK, searchResults);
         return "index";
     }
 
