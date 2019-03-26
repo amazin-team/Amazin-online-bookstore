@@ -26,7 +26,7 @@ import amazin.service.HibernateSearchService;
 public class BookController {
     public static final String VIEW_CREATE_BOOK = "create-book";
     public static final String VIEW_UPDATE_BOOK = "update-book";
-    public static final String MODEL_ATTRIBUTE_BOOK = "book";
+    public static final String MODEL_ATTRIBUTE_BOOK = "books";
     public static final String PARAMETER_BOOK_ID = "id";
     public static final String REQUEST_MAPPING_BOOK = "/";
 
@@ -97,48 +97,23 @@ public class BookController {
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
     }
 
-    @GetMapping("/fuzzySearchName")
-    public String fuzzySearchByBookName(@RequestParam(value = "keywords", required = false) String text, Model model) {
+    @GetMapping("/searchByName")
+    public String searchByBookName(@RequestParam(value = "keywords", required = true) String text, Model model) {
+
+        if (text.isEmpty())
+            return createRedirectViewPath(REQUEST_MAPPING_BOOK);
+
         List<Book> searchResults = null;
         try {
             searchResults = searchservice.fuzzySearch(text, "name");
-
         } catch (Exception ex) {
+            ex.printStackTrace();
             // for now do nothing. Later we will throw an exception and display a message to
             // the user
         }
-        model.addAttribute(MODEL_ATTRIBUTE_BOOK, searchResults);
-        return createRedirectViewPath(REQUEST_MAPPING_BOOK);
-    }
-
-    @GetMapping("/keywordSearchName")
-    public String keywordSearchByBookName(@RequestParam(value = "keywords", required = false) String text,
-            Model model) {
-        List<Book> searchResults = null;
-        try {
-            searchResults = searchservice.keywordSearch(text, "name");
-
-        } catch (Exception ex) {
-            // for now do nothing. Later we will throw an exception and display a message to
-            // the user
-        }
-        model.addAttribute(MODEL_ATTRIBUTE_BOOK, searchResults);
-        return createRedirectViewPath(REQUEST_MAPPING_BOOK);
-    }
-
-    @GetMapping("/wildcardSearchName")
-    public String wildcardSearchByBookName(@RequestParam(value = "keywords", required = false) String text,
-            Model model) {
-        List<Book> searchResults = null;
-        try {
-            searchResults = searchservice.wildcardSearch(text, "name");
-
-        } catch (Exception ex) {
-            // for now do nothing. Later we will throw an exception and display a message to
-            // the user
-        }
-        model.addAttribute(MODEL_ATTRIBUTE_BOOK, searchResults);
-        return createRedirectViewPath(REQUEST_MAPPING_BOOK);
+        if (searchResults != null && searchResults.isEmpty()) model.addAttribute(MODEL_ATTRIBUTE_BOOK, null);
+        else model.addAttribute(MODEL_ATTRIBUTE_BOOK, searchResults);
+        return "index";
     }
 
     private String createRedirectViewPath(String requestMapping) {
