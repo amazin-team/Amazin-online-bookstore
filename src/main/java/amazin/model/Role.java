@@ -13,23 +13,10 @@ import java.util.Set;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id", updatable = false, nullable = false)
-    private Long id;
-    @NotNull
-    @Column(unique = true, name="role_name")
-    @Field
+    @Column(name="role_name", updatable = false, nullable = false)
     private String name;
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

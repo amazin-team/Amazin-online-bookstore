@@ -23,20 +23,6 @@ public class RoleTest {
     }
 
     @Test
-    public void getId() {
-        role.setId(5L);
-
-        assertEquals(5L, role.getId().longValue());
-    }
-
-    @Test
-    public void setId() {
-        role.setId(5L);
-
-        assertEquals(5L, role.getId().longValue());
-    }
-
-    @Test
     public void getName() {
         role.setName("admin");
 
