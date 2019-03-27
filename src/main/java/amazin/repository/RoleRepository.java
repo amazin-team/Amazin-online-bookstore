@@ -8,5 +8,6 @@ import java.util.Set;
 
 @RepositoryRestResource(collectionResourceRel = "role", path = "role.json")
 public interface RoleRepository extends CrudRepository<Role, Long> {
+    Set<Role> findByName(String name);
     Set<Role> findAll();
 }
