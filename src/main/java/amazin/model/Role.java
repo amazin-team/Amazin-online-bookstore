@@ -17,7 +17,7 @@ public class Role {
     @Column(name = "role_id", updatable = false, nullable = false)
     private Long id;
     @NotNull
-    @Column(name="role_name")
+    @Column(unique = true, name="role_name")
     @Field
     private String name;
     @ManyToMany(mappedBy = "roles")
