@@ -3,6 +3,7 @@ package amazin.controller;
 import amazin.model.User;
 import amazin.service.SecurityService;
 import amazin.service.UserService;
+import amazin.validator.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.validation.Valid;
 
 @Controller
 public class UserController {
+
     @Autowired
     private UserService userService;
     @Autowired
     private SecurityService securityService;
+    @Autowired
+    private UserValidator userValidator;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -44,11 +47,10 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute User userForm, BindingResult result, Model model) {
+        userValidator.validate(userForm, result);
         if (result.hasErrors()) {
             return "registration";
         }
-
-        /** TODO properly set errors back to user from validation, validate that password = password confirmation */
 
         userService.save(userForm);
         securityService.autoLogin(userForm.getEmail(), userForm.getPasswordConfirmation());
@@ -65,7 +67,14 @@ public class UserController {
 
     @PostMapping("/admin/register")
     public String registerAdmin(@Valid @ModelAttribute User userForm, BindingResult result, Model model) {
-        /** TODO has extra token as opposed to normal register */
+        /** TODO has extra token as opposed to normal register and needs to set ROLE_ADMIN role in addition to ROLE_USER */
+        userValidator.validate(userForm, result);
+        if (result.hasErrors()) {
+            return "registration";
+        }
+
+        userService.save(userForm);
+        securityService.autoLogin(userForm.getEmail(), userForm.getPasswordConfirmation());
 
         return "redirect:/";
     }
