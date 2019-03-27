@@ -41,20 +41,25 @@
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="text" class="form-control form-control-user" id="firstName" th:field="*{firstName}" placeholder="First Name">
+                                    <span class="error-input" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control form-control-user" id="lastName" th:field="*{lastName}" placeholder="Last Name">
+                                    <span class="error-input" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <input type="email" class="form-control form-control-user" id="email" th:field="*{email}" placeholder="Email Address">
+                                <span class="error-input" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="password" class="form-control form-control-user" id="password" th:field="*{password}" placeholder="Password">
+                                    <span class="error-input" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="password" class="form-control form-control-user" id="passwordConfirmation" th:field="*{passwordConfirmation}" placeholder="Repeat Password">
+                                    <span class="error-input" th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></span>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary btn-user btn-block">
