@@ -1,9 +1,9 @@
 package amazin.service;
 
-import amazin.model.Role;
 import amazin.model.User;
 import amazin.repository.RoleRepository;
 import amazin.repository.UserRepository;
+import amazin.security.AuthoritiesConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
+        user.setRoles(new HashSet<>(roleRepository.findByName(AuthoritiesConstants.USER)));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>(roleRepository.findAll()));
         userRepository.save(user);
     }
 
