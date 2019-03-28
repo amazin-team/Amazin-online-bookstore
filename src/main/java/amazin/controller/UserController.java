@@ -68,13 +68,6 @@ public class UserController {
     @PostMapping("/admin/register")
     public String registerAdmin(@Valid @ModelAttribute User userForm, BindingResult result, Model model) {
         /** TODO has extra token as opposed to normal register and needs to set ROLE_ADMIN role in addition to ROLE_USER */
-        userValidator.validate(userForm, result);
-        if (result.hasErrors()) {
-            return "registration";
-        }
-
-        userService.save(userForm);
-        securityService.autoLogin(userForm.getEmail(), userForm.getPasswordConfirmation());
 
         return "redirect:/";
     }
