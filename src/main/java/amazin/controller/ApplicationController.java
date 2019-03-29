@@ -15,27 +15,27 @@ public class ApplicationController {
 
     @GetMapping({ "/" })
     public String index(Model model) {
-        model.addAttribute("books", bookRepository.findAll());
+        model.addAttribute(BookController.MODEL_ATTRIBUTE_BOOK, bookRepository.findAll());
         return "index";
     }
 
-    @GetMapping({"/login"})
-    public String login(){
+    @GetMapping({ "/login" })
+    public String login() {
         return "login";
     }
 
-    @GetMapping({"/register"})
-         public String register(){
+    @GetMapping({ "/register" })
+    public String register() {
         return "registration";
     }
 
-    @GetMapping({"/admin/register"})
-    public String registerAdmin(){
+    @GetMapping({ "/admin/register" })
+    public String registerAdmin() {
         return "registration-admin";
     }
 
-    @GetMapping({"/forgot-password"})
-    public String forgotPassword(){
+    @GetMapping({ "/forgot-password" })
+    public String forgotPassword() {
         return "forgot-password";
     }
 

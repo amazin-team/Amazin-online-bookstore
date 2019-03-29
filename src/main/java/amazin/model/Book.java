@@ -12,8 +12,13 @@ import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Indexed
-@Table(name="book")
+@Table(name = "book")
 public class Book {
+    public static final String BOOK_NAME_FIELD = "name";
+    public static final String BOOK_DESCRIPTION_FIELD = "description";
+    public static final String BOOK_ISBN_FIELD = "ISBN";
+    public static final String BOOK_AUTHOR_FIELD = "author";
+    public static final String BOOK_PUBLISHER_FIELD = "publisher";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,38 +26,38 @@ public class Book {
     private Long id;
     @NotNull
     @Size(min = 2, message = "Book name should have at least 2 characters")
-    @Column(name="book_name")
+    @Column(name = "book_name")
     @Field
     private String name;
     @NotNull
     @Size(min = 2, message = "Book description should have at least 2 characters")
-    @Column(name="book_description")
+    @Column(name = "book_description")
     @Field
     private String description;
     @NotNull
     @Size(min = 13, max = 13, message = "ISBN should be 13 characters long") // ISBN is a 13 digit number
-    @Column(name="book_isbn")
+    @Column(name = "book_isbn")
     @Field
     private String ISBN;
-    @Column(name="book_picture")
+    @Column(name = "book_picture")
     @Field
     private String picture;
     @NotNull
     @Size(min = 2, message = "Book author should have at least 2 characters")
-    @Column(name="book_author")
+    @Column(name = "book_author")
     @Field
     private String author;
     @NotNull
     @Size(min = 1, message = "Book publisher should have at least 2 characters")
-    @Column(name="book_publisher")
+    @Column(name = "book_publisher")
     @Field
     private String publisher;
     @Min(0)
-    @Column(name="book_inventory")
+    @Column(name = "book_inventory")
     @Field
     private int inventory;
     @Min(0)
-    @Column(name="book_price")
+    @Column(name = "book_price")
     @Field
     private double price;
 
