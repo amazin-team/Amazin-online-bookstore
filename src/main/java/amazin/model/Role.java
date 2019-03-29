@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Indexed
-@Table(name="role_table")
+@Table(name="role")
 public class Role {
 
     @Id

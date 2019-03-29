@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Indexed
-@Table(name="user_table")
+@Table(name="users")
 public class User {
 
     @Id

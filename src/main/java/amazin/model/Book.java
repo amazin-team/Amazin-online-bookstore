@@ -12,7 +12,7 @@ import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Indexed
-@Table(name="book_table")
+@Table(name="book")
 public class Book {
 
     @Id
