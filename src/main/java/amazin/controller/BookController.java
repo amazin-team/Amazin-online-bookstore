@@ -107,9 +107,8 @@ public class BookController {
         try {
             searchResults = searchservice.fuzzySearch(text, "name");
         } catch (Exception ex) {
+            /** TODO: handle this exception properly and display message to user */
             ex.printStackTrace();
-            // for now do nothing. Later we will throw an exception and display a message to
-            // the user
         }
         if (searchResults != null && searchResults.isEmpty())
             model.addAttribute(MODEL_ATTRIBUTE_BOOK, null);
