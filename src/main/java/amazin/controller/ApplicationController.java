@@ -15,7 +15,7 @@ public class ApplicationController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("books", bookRepository.findAll());
+        model.addAttribute(BookController.MODEL_ATTRIBUTE_BOOK, bookRepository.findAll());
         return "index";
     }
 }

@@ -5,7 +5,7 @@
 <body>
     <div layout:fragment="content">
         <h1>Create Book</h1>
-        <form action="#" th:action="@{/addbook}" th:object="${book}" method="post">
+        <form action="#" th:action="@{/addbook}" th:object="${books}" method="post">
             <p>
                 <label for="name">Name:</label>
                 <input id="name" type="text" minlength="2" th:field="*{name}">
