@@ -51,6 +51,7 @@ public class BookServiceTest {
         verify(repository).save(book);
     }
 
+    @Test
     public void createTest() {
         Book formModel = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,

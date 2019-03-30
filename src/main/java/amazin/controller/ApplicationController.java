@@ -13,30 +13,9 @@ public class ApplicationController {
     @Autowired
     BookRepository bookRepository;
 
-    @GetMapping({ "/" })
+    @GetMapping("/")
     public String index(Model model) {
         model.addAttribute(BookController.MODEL_ATTRIBUTE_BOOK, bookRepository.findAll());
         return "index";
     }
-
-    @GetMapping({ "/login" })
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping({ "/register" })
-    public String register() {
-        return "registration";
-    }
-
-    @GetMapping({ "/admin/register" })
-    public String registerAdmin() {
-        return "registration-admin";
-    }
-
-    @GetMapping({ "/forgot-password" })
-    public String forgotPassword() {
-        return "forgot-password";
-    }
-
 }

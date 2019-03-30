@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
 
@@ -42,16 +42,21 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                 </div>
-                                <form class="user">
+                                <form class="user" action="#" th:action="@{/login}" method="post">
+                                    <span th:text="${message}"></span>
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="email" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                                        <input type="email" class="form-control form-control-user" id="email" name="username" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" id="password" placeholder="Password">
+                                        <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
                                     </div>
-                                    <a href="index" class="btn btn-primary btn-user btn-block">
+                                    <div class="form-group">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    </div>
+                                    <span th:text="${error}"></span>
+                                    <button type="submit" href="index" class="btn btn-primary btn-user btn-block">
                                         Login
-                                    </a>
+                                    </button>
                                 </form>
                                 <hr>
                                 <div class="text-center">
