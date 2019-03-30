@@ -47,7 +47,8 @@ public class BookController {
     }
 
     @PostMapping("/addbook")
-    public String addBook(@Valid @ModelAttribute Book book, BindingResult result, RedirectAttributes attributes) {
+    public String addBook(@Valid @ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result,
+            RedirectAttributes attributes) {
         if (result.hasErrors()) {
             return VIEW_CREATE_BOOK;
         }
@@ -72,8 +73,8 @@ public class BookController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateBook(@PathVariable("id") Long id, @Valid Book book, BindingResult result,
-            RedirectAttributes attributes) {
+    public String updateBook(@PathVariable("id") Long id, @Valid @ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book,
+            BindingResult result, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             book.setId(id);
             return VIEW_UPDATE_BOOK;
