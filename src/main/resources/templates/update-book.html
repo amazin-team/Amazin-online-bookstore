@@ -6,47 +6,42 @@
 <div layout:fragment="content">
         <h1>Edit Book</h1>
         <form action="#" th:action="@{/update/{id}(id=${books.id})}" th:object="${books}" method="post">
-            <p>
-                <label for="name">Name:</label>
-                <input id="name" type="text" minlength="2" th:field="*{name}">
-                <span class="error-input" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-            </p>
-            <p>
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" minlength="2" th:field="*{description}" cols="17" rows="5"></textarea>
-                <span class="error-input" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-            </p>
-            <p>
-                <label for="ISBN">ISBN:</label>
-                <input id="ISBN" type="text" minlength="13" maxlength="13" th:field="*{ISBN}">
-                <span class="error-input" th:if="${#fields.hasErrors('ISBN')}" th:errors="*{ISBN}"></span>
-            </p>
-            <p>
-                <label for="picture">Picture:</label>
-                <input id="picture" type="file" th:field="*{picture}">
-                <span class="error-input" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></span>
-            </p>
-            <p>
-                <label for="author">Author:</label>
-                <input id="author" type="text" minlength="2" th:field="*{author}">
-                <span class="error-input" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
-            </p>
-            <p>
-                <label for="publisher">Publisher:</label>
-                <input id="publisher" type="text" minlength="2" th:field="*{publisher}">
-                <span class="error-input" th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span>
-            </p>
-            <p>
-                <label for="inventory">Inventory:</label>
-                <input id="inventory" type="number" min="0" th:field="*{inventory}">
-                <span class="error-input" th:if="${#fields.hasErrors('inventory')}" th:errors="*{inventory}"></span>
-            </p>
-            <p>
-                <label for="price">Price:</label>
-                <input id="price" type="number" step="0.01" min="0" th:field="*{price}">
-                <span class="error-input" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-            </p>
-            <p><input id="submit" type="submit" value="Update Book" /> <input type="reset" value="Reset" /></p>
+                <fieldset class="book-form">
+                    <label for="name">Name:</label>
+                    <span class="error-input" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                    <input id="name" type="text" minlength="2" th:field="*{name}">
+                       
+                    <label for="description">Description:</label>
+                    <span class="error-input" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    <textarea id="description" name="description" minlength="2" th:field="*{description}"  rows="5"></textarea>
+            
+                    <label for="ISBN">ISBN:</label>
+                    <span class="error-input" th:if="${#fields.hasErrors('ISBN')}" th:errors="*{ISBN}"></span>
+                    <input id="ISBN" type="text" minlength="13" maxlength="13" th:field="*{ISBN}">
+                    
+                    <label for="picture">Picture:</label>
+                    <span class="error-input" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></span>
+                    <input id="picture" type="file" th:field="*{picture}">
+                
+                    <label for="author">Author:</label>
+                    <span class="error-input" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+                    <input id="author" type="text" minlength="2" th:field="*{author}">
+                
+                    <label for="publisher">Publisher:</label>
+                    <span class="error-input" th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></span>
+                    <input id="publisher" type="text" minlength="2" th:field="*{publisher}">
+                
+                    <label for="inventory">Inventory:</label>
+                    <span class="error-input" th:if="${#fields.hasErrors('inventory')}" th:errors="*{inventory}"></span>
+                    <input id="inventory" type="number" min="0" th:field="*{inventory}">
+                    
+                    <label for="price">Price:</label>
+                    <span class="error-input" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                    <input id="price" type="number" step="0.01" min="0" th:field="*{price}">
+                    
+                    <input id="submit" type="submit" value="Update Book" />
+                    <input type="reset" value="Reset" />
+                </fieldset>
         </form>
     </div>
 </body>
