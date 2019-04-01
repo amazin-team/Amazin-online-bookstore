@@ -15,7 +15,7 @@
 </div>
 <div th:unless="${items == null or items.empty}">
     <br>
-    <h4 th:text="${#arrays.length(items) + ' ITEMS'}"></h4>
+    <h4 th:text="${#lists.size(items) + ' ITEM(S)'}"></h4>
     <hr class="shopping-cart-hr">
     <div th:each="item : ${items}">
             <div class="row">
