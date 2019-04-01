@@ -91,7 +91,8 @@
                         <a class="nav-link" href="/cart" id="messagesDropdown" role="button" data-toggle="tooltip" title="View shopping cart">
                             <i class="fas fa-shopping-cart"></i>
                             <!-- Counter - Messages -->
-                            <!--<span class="badge badge-danger badge-counter">7</span>-->
+
+                            <span th:if="${session.cart != null and !session.cart.items.empty}" class="badge badge-danger badge-counter" th:text="${#lists.size(session.cart.items)}" ></span>
                         </a>
                     </li>
 

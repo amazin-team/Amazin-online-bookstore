@@ -32,14 +32,15 @@ public class ShoppingCartController {
 
 
     @PostMapping("/addToCart/{bookId}")
-    public String addToCart(@PathVariable("bookId") Long bookId , HttpSession session, Model model){
+    public String addToCart(@PathVariable("bookId") Long bookId, HttpSession session, Model model){
+        ShoppingCart cart;
 
         if (session.getAttribute("cart") == null) {
-            ShoppingCart cart = shoppingCartService.createCart();
+             cart = shoppingCartService.createCart();
             shoppingCartService.addBook(cart, bookId);
             session.setAttribute("cart", cart);
         } else {
-            ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+            cart = (ShoppingCart) session.getAttribute("cart");
 
             int index = shoppingCartService.itemExists(cart, bookId);
 
@@ -50,6 +51,8 @@ public class ShoppingCartController {
                 shoppingCartService.incrementItem(i, 1);
 
             }
+
+            cart.updateItemCount();
             session.setAttribute("cart", cart);
         }
         return "index";
@@ -67,15 +70,16 @@ public class ShoppingCartController {
     @GetMapping("/cart")
     public String viewCart(HttpSession session, Model model){
         ArrayList<Item> items = new ArrayList<>();
+        int itemCount = 0;
         if (session.getAttribute("cart") != null) {
             ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
             items = cart.getItems();
+            session.setAttribute("cart", cart);
         }
 
         double total = shoppingCartService.calculateTotal(items);
         model.addAttribute("items", items);
         model.addAttribute("total", total);
-
 
         return VIEW_SHOPPING_CART;
     }
