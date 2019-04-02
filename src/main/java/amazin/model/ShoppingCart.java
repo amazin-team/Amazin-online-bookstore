@@ -73,6 +73,11 @@ public class ShoppingCart {
         return total;
     }
 
+    public void removeItem(Long bookId){
+        items.remove(this.getItem(bookId));
+        updateItemCount();
+    }
+
 
 
 }
