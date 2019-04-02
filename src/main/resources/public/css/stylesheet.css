@@ -76,9 +76,15 @@ body {
     font-size: 0.7em;
 }
 
-.cart-item-controls{
+.cart-item-controls, .cart-amount-controls{
     list-style-type: none;
     padding-left:0;
+}
+
+.cart-amount-controls{
+    margin-bottom:0.5rem;
+    margin-top:0.5rem;
+
 }
 
 .book-form>input,
@@ -112,9 +118,20 @@ body {
     cursor: pointer;
 }
 
-.cart-item-control{
+.cart-item-control, .cart-amount-control{
     display:inline-block;
     text-decoration: underline;
+}
+
+.cart-amount-control-button{
+    border:none;
+    background:transparent;
+    padding:0;
+    color:#4E73DF;
+}
+
+.cart-amount-control-button:disabled{
+    color:#BBBBBE;
 }
 
 .row-xs-height {

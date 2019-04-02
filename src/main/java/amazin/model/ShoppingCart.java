@@ -46,4 +46,12 @@ public class ShoppingCart {
         this.itemCount = count;
     }
 
+    public Item getItem(Long bookId){
+        for(Item i : items){
+            if(i.getBook().getId().equals(bookId)) return i;
+        }
+
+        return null;
+    }
+
 }

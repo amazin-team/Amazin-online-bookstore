@@ -30,34 +30,6 @@ public class ShoppingCartController {
 
     public static final String VIEW_SHOPPING_CART = "shopping-cart";
 
-
-    @PostMapping("/addToCart/{bookId}")
-    public String addToCart(@PathVariable("bookId") Long bookId, HttpSession session, Model model){
-        ShoppingCart cart;
-
-        if (session.getAttribute("cart") == null) {
-             cart = shoppingCartService.createCart();
-            shoppingCartService.addBook(cart, bookId);
-            session.setAttribute("cart", cart);
-        } else {
-            cart = (ShoppingCart) session.getAttribute("cart");
-
-            int index = shoppingCartService.itemExists(cart, bookId);
-
-            if (index == -1) {
-                shoppingCartService.addBook(cart, bookId);
-            } else {
-                Item i = cart.getItems().get(index);
-                shoppingCartService.incrementItem(i, 1);
-
-            }
-
-            cart.updateItemCount();
-            session.setAttribute("cart", cart);
-        }
-        return "index";
-    }
-
     @PostMapping("/updateCartItem")
     public void updateCartItem(@ModelAttribute @Valid Book book, Model model) {
 
