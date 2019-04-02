@@ -46,6 +46,14 @@ public class ShoppingCart {
         this.itemCount = count;
     }
 
+    public void incrementItemCount(){
+        this.itemCount = this.itemCount + 1;
+    }
+
+    public void decrementItemCount(){
+        this.itemCount = this.itemCount - 1;
+    }
+
     public Item getItem(Long bookId){
         for(Item i : items){
             if(i.getBook().getId().equals(bookId)) return i;
@@ -53,5 +61,18 @@ public class ShoppingCart {
 
         return null;
     }
+
+    public double getTotal(){
+
+        double total = 0;
+
+        for(Item item: items){
+            total+=(item.getBook().getPrice()*item.getQuantity());
+        }
+
+        return total;
+    }
+
+
 
 }
