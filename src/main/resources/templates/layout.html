@@ -98,10 +98,11 @@
 
                     <!-- Nav Item - Messages -->
                     <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="/cart" id="messagesDropdown" role="button"
+                        <a class="cart-icon nav-link dropdown-toggle" href="/cart" id="messagesDropdown" role="button"
                            data-toggle="tooltip" title="View shopping cart">
                             <i class="fas fa-shopping-cart"></i>
                             <!-- Counter - Messages -->
+
                             <span th:if="${session.cart != null and !session.cart.items.empty}" class="badge badge-danger badge-counter cart-banner-counter" th:text="${session.cart.itemCount}"></span>
                         </a>
                     </li>

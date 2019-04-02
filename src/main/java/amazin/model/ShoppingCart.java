@@ -78,6 +78,16 @@ public class ShoppingCart {
         updateItemCount();
     }
 
+    public int itemExists(Long bookId) {
+        for(int i=0; i < items.size(); i++){
+            if(items.get(i).getBook().getId().equals(bookId)){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
 
 
 }

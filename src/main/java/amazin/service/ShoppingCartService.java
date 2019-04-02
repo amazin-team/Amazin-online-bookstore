@@ -18,13 +18,9 @@ public class ShoppingCartService {
 
     @Autowired
     BookRepository bookRepository;
-//
-//    @Autowired
-//    ShoppingCartRepository shoppingCartRepository;
 
     public ShoppingCart createCart(){
         ShoppingCart cart = new ShoppingCart();
-//        shoppingCartRepository.save(cart);
 
         return cart;
     }
@@ -52,18 +48,6 @@ public class ShoppingCartService {
         }
 
         return total;
-    }
-
-    public int itemExists(ShoppingCart cart, Long bookId) {
-
-        ArrayList<Item> items = cart.getItems();
-        for(int i=0; i < items.size(); i++){
-            if(items.get(i).getBook().getId().equals(bookId)){
-                return i;
-            }
-        }
-
-        return -1;
     }
 
 }
