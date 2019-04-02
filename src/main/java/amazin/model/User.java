@@ -50,6 +50,12 @@ public class User{
     @ManyToMany
     private Set<Role> roles;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_tags",
+               joinColumns = @JoinColumn(name = "user_id"),
+               inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags;
+
     public Long getId() {
         return id;
     }

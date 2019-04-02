@@ -1,6 +1,7 @@
 package amazin.model;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -60,6 +61,11 @@ public class Book {
     @Column(name = "book_price")
     @Field
     private double price;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book_tags",
+               joinColumns = @JoinColumn(name = "book_id"),
+               inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags;
 
     public Long getId() {
         return id;
