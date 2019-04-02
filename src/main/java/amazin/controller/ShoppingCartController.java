@@ -42,13 +42,14 @@ public class ShoppingCartController {
     public String viewCart(HttpSession session, Model model){
         ArrayList<Item> items = new ArrayList<>();
         int itemCount = 0;
+        double total = 0;
         if (session.getAttribute("cart") != null) {
             ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
             items = cart.getItems();
+            total = cart.getTotal();
             session.setAttribute("cart", cart);
         }
 
-        double total = shoppingCartService.calculateTotal(items);
         model.addAttribute("items", items);
         model.addAttribute("total", total);
 
