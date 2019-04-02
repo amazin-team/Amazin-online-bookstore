@@ -54,7 +54,7 @@ public class BookServiceTest {
         when(book.getDescription()).thenReturn("Test Description");
         when(book.getISBN()).thenReturn("1111111111111");
         when(book.getInventory()).thenReturn(12);
-        when(book.getPicture()).thenReturn("Test Picture");
+        when(book.getPicture_url()).thenReturn("Test Picture");
         when(book.getPrice()).thenReturn(56.34);
         when(book.getPublisher()).thenReturn("Test Publisher");
         when(repository.findById(ID)).thenReturn(optionalBook);

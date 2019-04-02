@@ -23,8 +23,7 @@
             </p>
             <p>
                 <label for="picture">Picture:</label>
-                <input id="picture" type="file" th:field="*{picture}">
-                <span class="error" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></span>
+                <input id="picture"  type="file" name="picture"/>
             </p>
             <p>
                 <label for="author">Author:</label>
