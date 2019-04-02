@@ -35,19 +35,4 @@ public class ShoppingCartService {
         }
     }
 
-    public void incrementItem(Item i, int amount){
-        i.setQuantity(i.getQuantity()+amount);
-    }
-
-    public double calculateTotal(ArrayList<Item> items){
-
-        double total = 0;
-
-        for(Item item: items){
-            total+=(item.getBook().getPrice()*item.getQuantity());
-        }
-
-        return total;
-    }
-
 }

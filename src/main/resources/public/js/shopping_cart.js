@@ -8,7 +8,6 @@ function decrementQuantity(bookId) {
         beforeSend: function(xhr) {
             xhr.setRequestHeader(header, token);
         },
-        //data:post_data,
         success:function(data){
             $('.cart-increment-'+data.item.book.id).removeAttr("disabled");
             if(data.item.quantity == 1){
@@ -36,7 +35,6 @@ function incrementQuantity(bookId){
         beforeSend: function(xhr) {
             xhr.setRequestHeader(header, token);
         },
-        //data:post_data,
         success:function(data){
 
             $('.cart-decrement-'+data.item.book.id).removeAttr("disabled");
