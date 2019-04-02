@@ -17,30 +17,36 @@ public class User{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", updatable = false, nullable = false)
     private Long id;
+
     @NotNull
     @Size(min = 1, message = "First name cannot be empty")
     @Column(name="user_first_name")
     @Field
     private String firstName;
+
     @NotNull
     @Size(min = 1, message = "Last name cannot be empty")
     @Column(name="user_last_name")
     @Field
     private String lastName;
+
     @NotNull
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Not a valid email address")
     @Field
     @Column(unique = true, name="user_email")
     private String email;
+
     @NotNull
     @Size(min = 8, message = "Password must be at least 8 characters")
     @Size(max = 72, message = "Password must be less than 72 characters")
     @Column(name="user_password")
     @Field
     private String password;
+
     @NotNull
     @Transient
     private String passwordConfirmation;
+
     @ManyToMany
     private Set<Role> roles;
 
