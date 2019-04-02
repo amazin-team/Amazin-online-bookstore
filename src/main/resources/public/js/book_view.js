@@ -18,7 +18,13 @@ function addBookToCart(bookId) {
                         xhr.setRequestHeader(header, token, withCredentials);
                 },
                 success:function(data){
-                        console.log(data)
+
+                    if($('.cart-banner-counter').length == 0){
+                        $('.cart-icon').append('<span class="badge badge-danger badge-counter cart-banner-counter">' + data.itemCount+ '</span>');
+                    }else{
+                        $('.cart-banner-counter')[0].innerText = data.itemCount;
+                    }
+
                 },
                 error:function(error){
                         console.log(error);

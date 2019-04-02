@@ -11,7 +11,7 @@ function decrementQuantity(bookId) {
         //data:post_data,
         success:function(data){
             $('.cart-increment-'+data.item.book.id).removeAttr("disabled");
-            if(data.quantity == 1){
+            if(data.item.quantity == 1){
                 $('.cart-decrement-'+data.item.book.id)[0].setAttribute("disabled", true);
             }
 
@@ -40,7 +40,8 @@ function incrementQuantity(bookId){
         success:function(data){
 
             $('.cart-decrement-'+data.item.book.id).removeAttr("disabled");
-            if(data.quantity == data.item.book.inventory){
+
+            if(data.item.quantity == data.item.book.inventory){
                 $('.cart-increment-'+data.item.book.id)[0].setAttribute("disabled", true);
             }
 

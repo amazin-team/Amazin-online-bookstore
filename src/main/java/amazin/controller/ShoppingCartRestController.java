@@ -67,7 +67,7 @@ public class ShoppingCartRestController {
         } else {
             cart = (ShoppingCart) session.getAttribute("cart");
 
-            int index = shoppingCartService.itemExists(cart, bookId);
+            int index = cart.itemExists(bookId);
 
             if (index == -1) {
                 shoppingCartService.addBook(cart, bookId);
