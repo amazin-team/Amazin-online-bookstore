@@ -1,11 +1,3 @@
-$(document).ready(function(){
-    //var cartTable = $('#shopping-cart-table');
-    //cartTable.DataTable();
-    //cartTable.addClass("stripe");
-
-});
-
-
 function decrementQuantity(bookId) {
     var token = $('#_csrf').attr('content');
     var header = $('#_csrf_header').attr('content');

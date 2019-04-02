@@ -30,14 +30,13 @@ public class ShoppingCartController {
 
     public static final String VIEW_SHOPPING_CART = "shopping-cart";
 
-    @PostMapping("/updateCartItem")
-    public void updateCartItem(@ModelAttribute @Valid Book book, Model model) {
+    @GetMapping("/cart/delete/{bookId}")
+    public String deleteCartItem(@PathVariable("bookId") Long bookId, HttpSession session){
+            ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+            cart.removeItem(bookId);
 
+            return VIEW_SHOPPING_CART;
     }
-
-
-    @PostMapping("/removeItemFromCart")
-    public void deleteCartItem(){}
 
     @GetMapping("/cart")
     public String viewCart(HttpSession session, Model model){

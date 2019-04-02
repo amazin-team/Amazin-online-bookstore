@@ -51,7 +51,7 @@
                 </ul>
 
                 <ul class="cart-item-controls">
-                    <li class="cart-item-control">Remove</li>
+                    <a th:href="@{/cart/delete/{id}(id=${item.book.id})}"><li class="cart-item-control">Remove</li></a>
                 </ul>
             </div>
             </div>
