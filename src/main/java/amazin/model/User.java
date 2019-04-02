@@ -28,7 +28,7 @@ public class User {
     @Field
     private String lastName;
     @NotNull
-    @Pattern(regexp = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$", message = "Not a valid email address")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Not a valid email address")
     @Field
     @Column(unique = true, name="user_email")
     private String email;
