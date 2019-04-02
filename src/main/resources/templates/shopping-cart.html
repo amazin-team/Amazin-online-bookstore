@@ -15,7 +15,10 @@
 </div>
 <div th:unless="${items == null or items.empty}">
     <br>
-    <h4 th:text="${#lists.size(items) + ' ITEM(S)'}"></h4>
+    <div class="item-count">
+        <span class="item-count-value" th:text="${session.cart.itemCount}"></span>
+        <span class="item-count-label"> ITEM(S)</span>
+    </div>
     <hr class="shopping-cart-hr">
     <div th:id="'cart-item-' + ${item.book.id}" th:each="item : ${items}">
             <div class="row">
@@ -29,8 +32,14 @@
                 <div class="cart-item-detail" th:text="'Author: ' + ${item.book.author}"></div>
                 <div class="cart-item-detail" th:text="'ISBN: ' + ${item.book.ISBN}"></div>
                 <div class="cart-item-detail" th:text="'Item Price: $' + ${#numbers.formatDecimal(item.book.price,1,2)}"></div>
-                <div th:id="'cart-subtotal-'+${item.book.id}" class="cart-item-detail" th:text="'Subtotal: $' + ${#numbers.formatDecimal(item.getSubtotal(),1,2)}"></div>
-                <div th:id="'cart-quantity-'+${item.book.id}" class="cart-item-detail" th:text="'Qty: ' + ${item.quantity}" ></div>
+                <div class="cart-item-detail">
+                    <span class="car-item-detail-label">Subtotal: $</span>
+                    <span th:id="'cart-subtotal-'+${item.book.id}" class="cart-item-detail" th:text="${#numbers.formatDecimal(item.getSubtotal(),1,2)}"></span>
+                </div>
+                <div class="cart-item-detail">
+                    <span class="car-item-detail-label">Qty: </span>
+                    <span th:id="'cart-quantity-'+${item.book.id}" class="cart-item-detail" th:text="${item.quantity}"></span>
+                </div>
 
                 <ul class="cart-amount-controls">
                     <li class="cart-amount-control">
@@ -49,7 +58,8 @@
         <hr>
     </div>
     <div class="cart-total col-md-6">
-        <h4 th:text="'TOTAL: $' + ${#numbers.formatDecimal(total,1,2)} "></h4>
+        <span class="cart-total-label">TOTAL: $</span>
+        <span class="cart-total-value" th:text="${#numbers.formatDecimal(total,1,2)}"></span>
     </div>
 
 </div>

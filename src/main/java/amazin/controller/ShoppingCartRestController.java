@@ -7,6 +7,7 @@ import amazin.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -23,25 +24,37 @@ public class ShoppingCartRestController {
     ShoppingCartService shoppingCartService;
 
     @PostMapping("/cart/decrement/{bookId}")
-    public Item decrementItem(@PathVariable("bookId") Long bookId, HttpSession session) {
+    public JSONObject decrementItem(@PathVariable("bookId") Long bookId, HttpSession session) {
         ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
         Item item = cart.getItem(bookId);
 
         if(item.getQuantity() > 1){
             item.decrement();
+            cart.decrementItemCount();
         }
 
-        return item;
+        JSONObject obj = new JSONObject();
+        obj.put("item", item);
+        obj.put("total", cart.getTotal());
+        obj.put("itemCount", cart.getItemCount());
+
+        return obj;
     }
 
     @PostMapping("/cart/increment/{bookId}")
-    public Item incrementItem(@PathVariable("bookId") Long bookId, HttpSession session) {
+    public JSONObject incrementItem(@PathVariable("bookId") Long bookId, HttpSession session) {
         ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
         Item item = cart.getItem(bookId);
 
         item.increment();
+        cart.incrementItemCount();
 
-        return item;
+        JSONObject obj = new JSONObject();
+        obj.put("item", item);
+        obj.put("total", cart.getTotal());
+        obj.put("itemCount", cart.getItemCount());
+
+        return obj;
     }
 
     @RequestMapping("/cart/addToCart/{bookId}")
@@ -51,7 +64,6 @@ public class ShoppingCartRestController {
         if (session.getAttribute("cart") == null) {
             cart = shoppingCartService.createCart();
             shoppingCartService.addBook(cart, bookId);
-            session.setAttribute("cart", cart);
         } else {
             cart = (ShoppingCart) session.getAttribute("cart");
 
@@ -61,14 +73,13 @@ public class ShoppingCartRestController {
                 shoppingCartService.addBook(cart, bookId);
             } else {
                 Item i = cart.getItems().get(index);
-                shoppingCartService.incrementItem(i, 1);
-
+                i.increment();
             }
 
-            cart.updateItemCount();
-            session.setAttribute("cart", cart);
         }
 
+        session.setAttribute("cart", cart);
+        cart.incrementItemCount();
         return cart;
     }
 }

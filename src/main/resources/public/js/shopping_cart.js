@@ -18,13 +18,15 @@ function decrementQuantity(bookId) {
         },
         //data:post_data,
         success:function(data){
-            document.getElementById('cart-quantity-'+data.book.id).innerText = "Qty: " + data.quantity;
-
+            $('.cart-increment-'+data.item.book.id).removeAttr("disabled");
             if(data.quantity == 1){
-                $('.cart-decrement-'+data.book.id)[0].setAttribute("disabled", true);
+                $('.cart-decrement-'+data.item.book.id)[0].setAttribute("disabled", true);
             }
 
-            $('.cart-banner-counter')[0].innerText = data.itemCount;
+            updateItemValues(data.item);
+            updateItemCount(data.itemCount);
+            updateTotal(data.total);
+
         },
         error:function(error){
             console.log(error);
@@ -44,14 +46,33 @@ function incrementQuantity(bookId){
         },
         //data:post_data,
         success:function(data){
-            $('.cart-decrement-'+data.book.id).removeAttr("disabled");
-            document.getElementById('cart-quantity-'+data.book.id).innerText = "Qty: " + data.quantity;
-            document.getElementById('cart-subtotal-'+data.book.id).innerText = "Subtotal: $" + data.subtotal;
 
-            $('.cart-banner-counter')[0].innerText = data.itemCount;
+            $('.cart-decrement-'+data.item.book.id).removeAttr("disabled");
+            if(data.quantity == data.item.book.inventory){
+                $('.cart-increment-'+data.item.book.id)[0].setAttribute("disabled", true);
+            }
+
+            updateItemValues(data.item);
+            updateItemCount(data.itemCount);
+            updateTotal(data.total);
+
         },
         error:function(error){
             console.log(error);
         }
     });
+}
+
+function updateItemValues(item){
+    document.getElementById('cart-quantity-'+item.book.id).innerText = item.quantity;
+    document.getElementById('cart-subtotal-'+item.book.id).innerText = item.subtotal;
+}
+
+function updateItemCount(itemCount){
+    $('.cart-banner-counter')[0].innerText = itemCount;
+    $('.item-count-value')[0].innerText = itemCount
+}
+
+function updateTotal(total){
+    $('.cart-total-value')[0].innerText = total;
 }
