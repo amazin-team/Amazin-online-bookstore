@@ -17,10 +17,11 @@
     <br>
     <h4 th:text="${#lists.size(items) + ' ITEM(S)'}"></h4>
     <hr class="shopping-cart-hr">
-    <div th:each="item : ${items}">
+    <div th:id="'cart-item-' + ${item.book.id}" th:each="item : ${items}">
             <div class="row">
             <div class="cart-item-img col-xs-height col-xs-4 col-md-4 col-lg-3 col-top">
                 <img src="https://via.placeholder.com/155x200">
+                <!--<img th:attr="src=@{${item.book.picture}}">-->
             </div>
             <div class="cart-item-info col-xs-height col-xs-8 col-md-8 col-lg-9 col-top">
                 <div class="cart-item-name" th:text="${item.book.name}"></div>
@@ -28,11 +29,19 @@
                 <div class="cart-item-detail" th:text="'Author: ' + ${item.book.author}"></div>
                 <div class="cart-item-detail" th:text="'ISBN: ' + ${item.book.ISBN}"></div>
                 <div class="cart-item-detail" th:text="'Item Price: $' + ${#numbers.formatDecimal(item.book.price,1,2)}"></div>
-                <div class="cart-item-detail" th:text="'Subtotal: $' + ${#numbers.formatDecimal(item.getSubtotal(),1,2)}"></div>
-                <div class="cart-item-detail" th:text="'Qty: ' + ${item.quantity}"></div>
+                <div th:id="'cart-subtotal-'+${item.book.id}" class="cart-item-detail" th:text="'Subtotal: $' + ${#numbers.formatDecimal(item.getSubtotal(),1,2)}"></div>
+                <div th:id="'cart-quantity-'+${item.book.id}" class="cart-item-detail" th:text="'Qty: ' + ${item.quantity}" ></div>
+
+                <ul class="cart-amount-controls">
+                    <li class="cart-amount-control">
+                        <button th:class="'cart-decrement-' + ${item.book.id} + ' cart-amount-control-button'" th:disabled="${item.quantity == 1}" th:onclick="|decrementQuantity(${item.book.id})|"><i class="fas fa-minus-square"></i></button>
+                    </li>
+                    <li class="cart-amount-control">
+                        <button th:class="'cart-increment-' + ${item.book.id} + ' cart-amount-control-button'" th:onclick="|incrementQuantity(${item.book.id})|"><i class="fas fa-plus-square"></i></button>
+                    </li>
+                </ul>
 
                 <ul class="cart-item-controls">
-                    <li class="cart-item-control">Edit</li>
                     <li class="cart-item-control">Remove</li>
                 </ul>
             </div>

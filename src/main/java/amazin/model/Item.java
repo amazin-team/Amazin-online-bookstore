@@ -35,5 +35,13 @@ public class Item {
     public double getSubtotal(){
         return this.book.getPrice()*this.quantity;
     }
+
+    public void decrement(){
+        this.quantity = this.quantity-1;
+    }
+
+    public void increment(){
+        this.quantity = this.quantity+1;
+    }
 }
 
