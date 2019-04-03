@@ -10,10 +10,10 @@
 <body>
 <div layout:fragment="content">
 <h1>Shopping Cart</h1>
-<div th:if="${cart.items == null or cart.items.empty}">
+<div th:if="${cart == null or cart.items == null or cart.items.empty}">
     Shopping Cart is Empty!
 </div>
-<div th:unless="${cart.items == null or cart.items.empty}">
+<div th:unless="${cart == null or cart.items == null or cart.items.empty}">
     <br>
     <div class="item-count">
         <span class="item-count-value" th:text="${cart.itemCount}"></span>
