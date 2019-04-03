@@ -49,7 +49,7 @@ public class ApplicationController {
 
     @GetMapping("/admin")
     public String admin(Model model) {
-        model.addAttribute(BookController.MODEL_ATTRIBUTE_BOOK, bookRepository.findAll());
+        model.addAttribute(BookController.MODEL_ATTRIBUTE_BOOK, bookService.getAll());
         return "admin";
     }
 }
