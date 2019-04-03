@@ -11,15 +11,13 @@
             </div>
             <div class="mdl-card__supporting-text" th:text="${book.description}"></div>
             <div class="mdl-card__supporting-text" th:text="${book.author}">Author:</div>
-            <div class="mdl-card__supporting-text" th:text="${book.publisher}">Publisher:</div>
-            <div class="mdl-card__supporting-text" th:text="${book.ISBN}">ISBN:</div>
-            <div class="mdl-card__supporting-text" th:text="${book.Inventory}">Inventory:</div>
-            <div class="mdl-card__supporting-text" th:text="${book.Price}">Price:</div>
 
             <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">View book</a>
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" th:href="@{/edit/{id}(id=${book.id})}" data-upgraded=",MaterialButton,MaterialRipple">View book</a>
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" th:href="@{/delete/{id}(id=${book.id})}" data-upgraded=",MaterialButton,MaterialRipple">View book</a>
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   data-upgraded=",MaterialButton,MaterialRipple"
+                   th:href="@{'/book/' + ${book.id}}">
+                    View book
+                </a>
             </div>
         </div>
     </div>

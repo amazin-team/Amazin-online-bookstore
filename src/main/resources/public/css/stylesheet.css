@@ -203,7 +203,7 @@ body {
 
 .mdl-card--horizontal {
     flex-direction: column;
-    height: 1vh; /* 1 */
+    height: 2vh; /* 1 */
     padding-left: 150px;
     width: 100%;
 }
@@ -212,6 +212,12 @@ body {
         position: absolute;
         width: 150px;
     }
+
+.mdl-card__view{
+    left:0;
+    width: 80%;
+
+}
 
     .mdl-card__supporting-text {
         flex: 1 1 auto;
