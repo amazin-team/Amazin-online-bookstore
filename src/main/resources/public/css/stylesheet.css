@@ -52,7 +52,7 @@ body {
 
 }
 
-.cart-item-name{
+.cart-item-name {
     font-weight: 400;
     font-size: 1em;
     text-transform: uppercase;
@@ -61,18 +61,19 @@ body {
     line-height: inherit;
 }
 
-.shopping-cart-hr{
+.shopping-cart-hr {
     margin-top: 0;
     border-top: 4px solid #3b3d44;
 }
 
-.cart-item-price{
+.cart-item-price {
     margin: 8px 0;
     font-weight: 600;
     font-size: 1.2em;
 }
 
-.cart-total, .item-count {
+.cart-total,
+.item-count {
     font-size: 1.5rem;
 }
 
@@ -80,26 +81,30 @@ body {
     margin-bottom: 10px;
 }
 
-.cart-item-detail, .cart-item-control {
+.cart-item-detail,
+.cart-item-control {
     font-size: 11px;
 }
 
-.cart-item-detail span, .cart-total span, .item-count span {
+.cart-item-detail span,
+.cart-total span,
+.item-count span {
     padding: 0;
 }
 
-.cart-item-controls, .cart-amount-controls{
+.cart-item-controls,
+.cart-amount-controls {
     list-style-type: none;
-    padding-left:0;
+    padding-left: 0;
 }
 
-.cart-item-controls{
-    margin-bottom:0;
+.cart-item-controls {
+    margin-bottom: 0;
 }
 
-.cart-amount-controls{
-    margin-bottom:0.5rem;
-    margin-top:0.5rem;
+.cart-amount-controls {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
 
 }
 
@@ -134,28 +139,41 @@ body {
     cursor: pointer;
 }
 
+.book-delete-control {
+    background: none !important;
+    color: #4e73df;
+    border: none;
+    padding: 0 !important;
+    font: inherit;
+    /*border is optional*/
+    cursor: pointer;
+}
 
+.book-delete-control:hover{
+    text-decoration:underline;
+}
 
-.cart-item-control, .cart-amount-control, .book-delete-control{
-    display:inline-block;
+.cart-item-control,
+.cart-amount-control {
+    display: inline-block;
     text-decoration: underline;
 }
 
-.cart-item-control{
-    border:none;
-    background-color:transparent;
-    padding:0;
+.cart-item-control {
+    border: none;
+    background-color: transparent;
+    padding: 0;
 }
 
-.cart-amount-control-button{
-    border:none;
-    background:transparent;
-    padding:0;
-    color:#4E73DF;
+.cart-amount-control-button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: #4E73DF;
 }
 
-.cart-amount-control-button:disabled{
-    color:#BBBBBE;
+.cart-amount-control-button:disabled {
+    color: #BBBBBE;
 }
 
 .row-xs-height {
@@ -164,8 +182,9 @@ body {
 
 .row-xs-height.row-edge-unpadded .col-xs-height:first-of-type {
     padding-left: 0;
-  }
-.add-cart-button{
+}
+
+.add-cart-button {
     color: #4e73df;
     text-decoration: none;
     background-color: transparent;
