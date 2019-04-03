@@ -118,6 +118,12 @@
             <version>5.1.5.RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <!-- Add AWS S3 integration -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.11.133</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

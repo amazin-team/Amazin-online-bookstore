@@ -20,8 +20,7 @@
                     <input id="ISBN" type="text" minlength="13" maxlength="13" th:field="*{ISBN}">
                     
                     <label for="picture">Picture:</label>
-                    <span class="error-input" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></span>
-                    <input id="picture" type="file" th:field="*{picture}">
+                    <input id="picture"  type="file" name="picture"/>
                 
                     <label for="author">Author:</label>
                     <span class="error-input" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>

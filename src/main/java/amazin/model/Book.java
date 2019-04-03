@@ -41,7 +41,7 @@ public class Book {
     private String ISBN;
     @Column(name = "book_picture")
     @Field
-    private String picture;
+    private String picture_url;
     @NotNull
     @Size(min = 2, message = "Book author should have at least 2 characters")
     @Column(name = "book_author")
@@ -93,12 +93,12 @@ public class Book {
         this.ISBN = ISBN;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getPicture_url() {
+        return picture_url;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setPicture_url(String picture) {
+        this.picture_url = picture;
     }
 
     public String getAuthor() {
@@ -136,13 +136,13 @@ public class Book {
     public Book() {
     }
 
-    public Book(Long id, String name, String description, String ISBN, String picture, String author, String publisher,
+    public Book(Long id, String name, String description, String ISBN, String picture_url, String author, String publisher,
             int inventory, double price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.ISBN = ISBN;
-        this.picture = picture;
+        this.picture_url = picture_url;
         this.author = author;
         this.publisher = publisher;
         this.inventory = inventory;
@@ -152,7 +152,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", ISBN="
-                + ISBN + ", picture='" + picture + '\'' + ", author='" + author + '\'' + ", publisher='" + publisher
+                + ISBN + ", picture_url='" + picture_url + '\'' + ", author='" + author + '\'' + ", publisher='" + publisher
                 + '\'' + ", inventory='" + inventory + '\'' + ", price='" + price + '\'' + '}';
     }
 
@@ -166,13 +166,13 @@ public class Book {
         Book book = (Book) o;
         return Objects.equals(id, book.id) && Objects.equals(name, book.name)
                 && Objects.equals(description, book.description) && Objects.equals(ISBN, book.ISBN)
-                && Objects.equals(picture, book.picture) && Objects.equals(author, book.author)
+                && Objects.equals(picture_url, book.picture_url) && Objects.equals(author, book.author)
                 && Objects.equals(publisher, book.publisher) && inventory == book.inventory && price == book.price;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, ISBN, picture, author, publisher, inventory, price);
+        return Objects.hash(id, name, description, ISBN, picture_url, author, publisher, inventory, price);
     }
 
 }

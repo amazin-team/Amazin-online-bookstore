@@ -28,18 +28,21 @@ import amazin.BookTestUtil;
 import amazin.model.Book;
 import amazin.service.BookService;
 import amazin.service.HibernateSearchService;
+import amazin.service.AmazonService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BookControllerTest {
 
     private BookController controller;
     private BookService bookService;
+    private AmazonService amazonService;
 
     @Before
     public void setUp() {
         bookService = mock(BookService.class);
         mock(HibernateSearchService.class);
-        controller = new BookController(bookService);
+        amazonService = new AmazonService();
+        controller = new BookController(bookService, amazonService);
     }
 
     @Test

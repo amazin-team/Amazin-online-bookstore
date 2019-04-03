@@ -22,6 +22,10 @@ import amazin.model.Book;
 import amazin.service.BookService;
 import amazin.service.HibernateSearchService;
 
+import java.io.File;
+import amazin.service.AmazonService;
+import org.springframework.web.multipart.MultipartFile;
+
 @Controller
 @SessionAttributes("books")
 public class BookController {
@@ -37,8 +41,12 @@ public class BookController {
     @Autowired
     private final BookService bookService;
 
-    public BookController(final BookService bookService) {
+    @Autowired
+    private final AmazonService amazonService;
+
+    public BookController(final BookService bookService, final AmazonService amazonService) {
         this.bookService = bookService;
+        this.amazonService = amazonService;
     }
 
     @GetMapping("/addbook")
@@ -48,12 +56,12 @@ public class BookController {
     }
 
     @PostMapping("/addbook")
-    public String addBook(@Valid @ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result,
+    public String addBook(@RequestParam(name = "picture") MultipartFile picture, @Valid @ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result,
             RedirectAttributes attributes) {
         if (result.hasErrors()) {
             return VIEW_CREATE_BOOK;
         }
-
+        book.setPicture_url(uploadFile(picture));
         Book addedBook = bookService.create(book);
 
         attributes.addAttribute(PARAMETER_BOOK_ID, addedBook.getId());
@@ -93,10 +101,22 @@ public class BookController {
         Optional<Book> deletedBook = bookService.delete(id);
 
         if (deletedBook.isPresent()) {
-            attributes.addAttribute(PARAMETER_BOOK_ID, deletedBook.get().getId());
+            Book book = deletedBook.get();
+            deleteFile(book.getPicture_url());
+            attributes.addAttribute(PARAMETER_BOOK_ID, book.getId());
         }
 
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
+    }
+
+    @PostMapping("/storage/uploadFile")
+    public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
+        return this.amazonService.uploadFile(file);
+    }
+
+    @DeleteMapping("/storage/deleteFile")
+    public String deleteFile(@RequestPart(value = "url") String fileUrl) {
+        return this.amazonService.deleteFileFromS3Bucket(fileUrl);
     }
 
     @GetMapping("/search")

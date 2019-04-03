@@ -5,7 +5,7 @@
     <body>
         <div layout:fragment="content">
             <h1>Create Book</h1>
-            <form action="#" th:action="@{/addbook}" th:object="${books}" method="post">
+            <form action="#" th:action="@{/addbook}" th:object="${books}" method="post" enctype="multipart/form-data">
                 <fieldset class="book-form">
                     <label for="name">Name:</label>
                     <span class="error-input" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
@@ -20,8 +20,7 @@
                     <input id="ISBN" type="text" minlength="13" maxlength="13" th:field="*{ISBN}">
                     
                     <label for="picture">Picture:</label>
-                    <span class="error-input" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></span>
-                    <input id="picture" type="file" th:field="*{picture}">
+                    <input id="picture"  type="file" name="picture"/>
                 
                     <label for="author">Author:</label>
                     <span class="error-input" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
