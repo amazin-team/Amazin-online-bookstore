@@ -85,4 +85,16 @@ public class ShoppingCartService {
         }
     }
 
+    public void checkout(ShoppingCart cart){
+        for(Item i : cart.getItems()){
+            int oldInventory = i.getBook().getInventory();
+            Book b = i.getBook();
+            b.setInventory(oldInventory - i.getQuantity());
+            bookRepository.save(b);
+        }
+
+        cart.getItems().clear();
+        cartRepository.save(cart);
+    }
+
 }

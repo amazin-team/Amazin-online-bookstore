@@ -68,4 +68,20 @@ public class ShoppingCartController {
         return VIEW_SHOPPING_CART;
     }
 
+    @PostMapping("/checkout")
+    public  String checkout(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        ShoppingCart cart = cartRepository.findByUser(user);
+
+        if(cart != null){
+            shoppingCartService.checkout(cart);
+        }
+
+        model.addAttribute("cart", cart);
+        return "checkout";
+    }
+
 }

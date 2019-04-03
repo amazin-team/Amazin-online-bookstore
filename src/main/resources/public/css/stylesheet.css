@@ -168,3 +168,8 @@ body {
     text-decoration: none;
     background-color: transparent;
 }
+
+.checkout-button {
+    background-color: lightsteelblue;
+    color:white;
+}
