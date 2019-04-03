@@ -22,6 +22,7 @@ import amazin.model.ShoppingCart;
 import amazin.repository.ShoppingCartRepository;
 import amazin.model.Tag;
 import amazin.service.SecurityService;
+import amazin.service.UserServiceImpl;
 import amazin.service.BookService;
 import amazin.service.HibernateSearchService;
 
@@ -47,6 +48,8 @@ public class BookController {
     private final BookService bookService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserServiceImpl userService;
     @Autowired
     private SecurityServiceImpl securityService;
     @Autowired
@@ -190,12 +193,24 @@ public class BookController {
             model.addAttribute(MODEL_ATTRIBUTE_BOOK, searchResults);
 
         User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
-        ShoppingCart userCart = shoppingCartRepository.findByUser(currentUser);
 
-        model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
-        model.addAttribute("cart", userCart);
-        model.addAttribute(BookController.MODEL_ATTRIBUTE_RECOMMENDATIONS,
-                           bookService.getAllRecommendedBooks(currentUser));
+        if (currentUser != null) {
+            userService.recordUserTags(currentUser, searchResults);
+            userRepository.save(currentUser);
+
+            ShoppingCart userCart = shoppingCartRepository.findByUser(currentUser);
+
+            model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
+            model.addAttribute("cart", userCart);
+            model.addAttribute(BookController.MODEL_ATTRIBUTE_RECOMMENDATIONS,
+                               bookService.getAllRecommendedBooks(currentUser));
+        }
+        else {
+            model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, null);
+            model.addAttribute("cart", null);
+            model.addAttribute(BookController.MODEL_ATTRIBUTE_RECOMMENDATIONS,
+                               null);
+        }
 
         return "index";
     }
