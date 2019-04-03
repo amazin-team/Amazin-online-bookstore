@@ -1,14 +1,18 @@
 package amazin.service;
 
-import amazin.model.User;
-import amazin.repository.RoleRepository;
-import amazin.repository.UserRepository;
-import amazin.security.AuthoritiesConstants;
+import java.util.HashSet;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import amazin.model.User;
+import amazin.model.Tag;
+import amazin.model.Book;
+import amazin.repository.RoleRepository;
+import amazin.repository.UserRepository;
+import amazin.security.AuthoritiesConstants;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,6 +28,14 @@ public class UserServiceImpl implements UserService {
         user.setRoles(new HashSet<>(roleRepository.findByName(AuthoritiesConstants.USER)));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public void recordUserTags(User user, List<Book> books) {
+        for (Book book: books) {
+            for (Tag tag: book.getTags()) {
+                user.addTag(tag);
+            }
+        }
     }
 
     @Override
