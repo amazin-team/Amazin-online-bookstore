@@ -21,7 +21,7 @@ import javax.persistence.*;
 public class Tag {
 
     @Id
-    @Column(name = "tag_id", updatable = false, nullable = false)
+    @Column(name = "tag_id", updatable = true, nullable = false)
     private String id;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tags")
