@@ -21,6 +21,8 @@
     <link rel="stylesheet"
           href="/webjars/startbootstrap-sb-admin-2/4.0.2/css/sb-admin-2.min.css" />
 
+    <link href="/css/stylesheet.css" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body class="bg-gradient-primary">
@@ -53,7 +55,7 @@
                                     <div class="form-group">
                                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                     </div>
-                                    <span th:text="${error}"></span>
+                                    <span class="error-input" th:text="${error}"></span>
                                     <button type="submit" href="index" class="btn btn-primary btn-user btn-block">
                                         Login
                                     </button>
