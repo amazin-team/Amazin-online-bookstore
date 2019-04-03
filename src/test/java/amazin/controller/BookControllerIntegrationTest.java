@@ -25,12 +25,14 @@ import amazin.BookTestUtil;
 import amazin.model.Book;
 import amazin.repository.BookRepository;
 import amazin.service.BookService;
+import amazin.service.AmazonService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BookControllerIntegrationTest {
 
     private BookController controller;
     private BookService bookService;
+    private AmazonService amazonService;
 
     @Mock
     private BookRepository repo;
@@ -38,7 +40,8 @@ public class BookControllerIntegrationTest {
     @Before
     public void setUp() {
         bookService = new BookService(repo);
-        controller = new BookController(bookService);
+        amazonService = new AmazonService();
+        controller = new BookController(bookService, amazonService);
     }
 
     @Test
