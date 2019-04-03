@@ -12,10 +12,12 @@ function addBookToCart(bookId) {
         },
         success:function(data){
 
-            if($('.cart-banner-counter').length == 0){
-                $('.cart-icon').append('<span class="badge badge-danger badge-counter cart-banner-counter">' + data.itemCount+ '</span>');
-            }else{
-                $('.cart-banner-counter')[0].innerText = data.itemCount;
+            if(data.itemCount != null){
+                if($('.cart-banner-counter').length == 0){
+                    $('.cart-icon').append('<span class="badge badge-danger badge-counter cart-banner-counter">' + data.itemCount+ '</span>');
+                }else{
+                    $('.cart-banner-counter')[0].innerText = data.itemCount;
+                }
             }
 
         },
