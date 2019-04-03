@@ -1,12 +1,14 @@
 package amazin.model;
 
+import java.util.Set;
+import java.util.HashSet;
+
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 @Entity
 @Indexed
@@ -110,5 +112,35 @@ public class User{
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+
+        // The tags need to reference the users associated
+        // to build the join table properly.
+        for(Tag tag: tags) {
+            tag.getUsers().add(this);
+        }
+    }
+
+    // This method allows faster tag adding.
+    public boolean addTag(Tag tag) {
+        tag.getUsers().add(this);
+        return tags.add(tag);
+    }
+
+    // This method allows faster tag removal.
+    public boolean removeTag(Tag tag) {
+        tag.getUsers().remove(this);
+        return tags.remove(tag);
+    }
+
+    public User() {
+        tags = new HashSet<>();
     }
 }

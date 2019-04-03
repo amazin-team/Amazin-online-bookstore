@@ -1,6 +1,10 @@
 package amazin;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import amazin.model.Book;
+import amazin.model.Tag;
 
 public class BookTestUtil {
 
@@ -21,10 +25,22 @@ public class BookTestUtil {
     public static final int INVENTORY_UPDATED = 12;
     public static final double PRICE = 24.25;
     public static final double PRICE_UPDATED = 20;
+    public static final Set<Tag> TAGS = new HashSet<>();
+    public static final Set<Tag> TAGS_UPDATED = new HashSet<>();
+
+    public static void setup() {
+        Tag oldStubTag = new Tag();
+        oldStubTag.setId("old");
+        TAGS.add(oldStubTag);
+
+        Tag newStubTag = new Tag();
+        newStubTag.setId("new");
+        TAGS_UPDATED.add(newStubTag);
+    }
 
     public static Book createModel(Long id, String name, String description, String ISBN, String picture, String author,
-            String publisher, int inventory, double price) {
-        Book model = new Book(id, name, description, ISBN, picture, author, publisher, inventory, price);
+                                   String publisher, int inventory, double price, Set<Tag> tags) {
+        Book model = new Book(id, name, description, ISBN, picture, author, publisher, inventory, price, tags);
 
         return model;
     }

@@ -8,6 +8,8 @@ package amazin.model;
 
 //--------------------------------------------------------------------------------
 import java.util.Set;
+import java.util.HashSet;
+import java.util.Objects;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -15,19 +17,17 @@ import javax.persistence.*;
 
 //--------------------------------------------------------------------------------
 @Entity
-@Indexed
 @Table(name="tags")
 public class Tag {
 
     @Id
-    @Field
     @Column(name = "tag_id", updatable = false, nullable = false)
     private String id;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tags")
     private Set<User> users;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tags")
     private Set<Book> books;
 
     public String getId() {
@@ -52,5 +52,31 @@ public class Tag {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    public Tag() {
+        books = new HashSet<>();
+        users = new HashSet<>();
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" + "id=" + id + "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Tag)) {
+            return false;
+        }
+        Tag tag = (Tag) o;
+        return id.equals(tag.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
