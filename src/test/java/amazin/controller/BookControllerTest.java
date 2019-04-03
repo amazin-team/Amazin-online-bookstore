@@ -46,6 +46,7 @@ public class BookControllerTest {
 
     @Before
     public void setUp() {
+        BookTestUtil.setup();
         bookService = mock(BookService.class);
         s3 = mock(AmazonS3.class);
         mock(HibernateSearchService.class);
@@ -87,7 +88,7 @@ public class BookControllerTest {
         BindingAwareModelMap model = new BindingAwareModelMap();
         Book updated = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
         Optional<Book> optionalBook = Optional.of(updated);
         when(bookService.findById(BookTestUtil.ID)).thenReturn(optionalBook);
@@ -109,17 +110,18 @@ public class BookControllerTest {
         assertEquals(updated.getName(), formModel.getName());
         assertEquals(updated.getInventory(), formModel.getInventory());
         assertEquals(updated.getPrice(), formModel.getPrice(), 0.1);
+        assertEquals(updated.getTags(), formModel.getTags());
     }
 
-   @Test
-   public void addBook() {
-       Book formModel = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
-               BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-               BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+    @Test
+    public void addBook() {
+        Book formModel = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
+                BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
-       Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
-               BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-               BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+        Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
+                BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
        when(bookService.create(formModel)).thenReturn(model);
 
@@ -143,7 +145,7 @@ public class BookControllerTest {
 
         Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
 
         Optional<Book> optionalBook = Optional.of(model);

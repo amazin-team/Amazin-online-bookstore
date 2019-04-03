@@ -37,8 +37,31 @@
                     <label for="price">Price:</label>
                     <span class="error-input" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
                     <input id="price" type="number" step="0.01" min="0" th:field="*{price}">
-                    
-                    <input id="submit" type="submit" value="Update Book" />
+
+					<table>
+						<thead>
+						<tr>
+							<th>Tag</th>
+							<th>
+								<button type="submit" name="addRow">Add tag</button>
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="tag, rowStat : *{tags}">
+							<td>
+								<input id= type="text" th:field="*{tags[__${rowStat.index}__].id}">
+							</td>
+							<td>
+								<button type="submit" name="removeRow"
+										th:value="${tag.id}">Remove tag</button>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<span class="error-input" th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}"></span>
+
+					<input id="submit" type="submit" value="Update Book" />
                     <input type="reset" value="Reset" />
                 </fieldset>
         </form>

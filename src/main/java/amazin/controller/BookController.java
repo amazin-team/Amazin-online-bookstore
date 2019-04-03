@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 
 import amazin.model.User;
 import amazin.repository.UserRepository;
 import amazin.service.SecurityServiceImpl;
+import org.springframework.validation.FieldError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import amazin.model.Book;
+import amazin.model.Tag;
+import amazin.service.SecurityService;
 import amazin.service.BookService;
 import amazin.service.HibernateSearchService;
 
@@ -56,6 +60,33 @@ public class BookController {
         User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
         model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
         model.addAttribute(MODEL_ATTRIBUTE_BOOK, new Book());
+        return VIEW_CREATE_BOOK;
+    }
+
+    @RequestMapping(value = {"/addbook",
+                             "/update/{id}"}, params = {"addRow"})
+    public String addTag(@ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result) {
+        String errorMessage = "Please enter a unique tag before adding another tag";
+
+        Tag newTag = new Tag();
+        newTag.setId("");
+
+        if (!book.addTag(newTag))
+            result.addError(new FieldError("books", "tags", errorMessage));
+
+        return VIEW_CREATE_BOOK;
+    }
+
+    @RequestMapping(value = {"/addbook",
+                             "/update/{id}"}, params = {"removeRow"})
+    public String removeTag(@ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result,
+                            HttpServletRequest req) {
+        String tagId = req.getParameter("removeRow");
+
+        Tag removedTag = new Tag();
+        removedTag.setId(tagId);
+
+        book.removeTag(removedTag);
         return VIEW_CREATE_BOOK;
     }
 
