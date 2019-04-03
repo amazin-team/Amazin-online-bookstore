@@ -10,5 +10,9 @@
     <div layout:fragment="content">
         <div th:replace=" ~{fragments/_bookShower.html :: dataTable} "></div>
     </div>
+
+    <th:block layout:fragment="script">
+        <script src="/js/cart.js"></script>
+    </th:block>
 </body>
 </html>

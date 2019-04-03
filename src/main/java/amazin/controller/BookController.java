@@ -64,9 +64,8 @@ public class BookController {
         if (result.hasErrors()) {
             return VIEW_CREATE_BOOK;
         }
-
-        bookService.create(book);
         book.setPicture_url(uploadFile(picture));
+        bookService.create(book);
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
     }
 
