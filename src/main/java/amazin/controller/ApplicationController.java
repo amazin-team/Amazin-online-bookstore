@@ -24,6 +24,8 @@ public class ApplicationController {
     @Autowired
     ShoppingCartRepository shoppingCartRepository;
 
+    public static final String MODEL_ATTRIBUTE_RECOMMENDATION = "recommendations";
+
     public static final String VIEW_ADMIN = "admin";
 
 
@@ -33,6 +35,7 @@ public class ApplicationController {
         ShoppingCart userCart = shoppingCartRepository.findByUser(currentUser);
 
         model.addAttribute(BookController.MODEL_ATTRIBUTE_BOOK, bookRepository.findAll());
+        model.addAttribute(MODEL_ATTRIBUTE_RECOMMENDATION, bookRepository.findAll());
         model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
         model.addAttribute("cart", userCart);
 

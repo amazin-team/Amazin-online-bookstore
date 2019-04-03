@@ -9,7 +9,8 @@
     <body>
     <div layout:fragment="content">
         <div th:replace=" ~{fragments/_bookShower.html :: dataTable} "></div>
-         <div th:replace=" ~{fragments/_bookRecommendation.html :: dataCarousel} "></div>
+        <h2>Recommended:</h2>
+        <div th:replace=" ~{fragments/_bookRecommendation.html :: dataCarousel} "></div>
     </div>
     
 </body>

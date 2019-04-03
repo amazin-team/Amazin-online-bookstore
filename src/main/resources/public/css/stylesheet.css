@@ -226,3 +226,23 @@ body {
         width: 150px;
         height: 200px;
     }
+
+
+    .carousel{
+        padding-top: 50px;
+    }
+
+
+.card-recommended-a{
+    height: 100%;
+    width: 100%;
+}
+
+card-image-recommend{
+    height: 100%;
+    width: 100%;
+}
+
+.card-card{
+    width: auto;
+}

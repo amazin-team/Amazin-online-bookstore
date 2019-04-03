@@ -1,12 +1,14 @@
-<div th:fragment="dataCarousel" th:switch="${books}" xmlns:th="http://www.w3.org/1999/xhtml">
+<div class="carousel"
+    th:fragment="dataCarousel" 
+    th:switch="${recommendations}" xmlns:th="http://www.w3.org/1999/xhtml">
     <h2 th:case="null">Book Catalogue is Empty!</h2>
     <div th:case="*">
-        <div class="mdl-card mdl-shadow--2dp mdl-card--horizontal" th:each="book : ${books}">
-            <div class="mdl-card__media">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+        <div class="mdl-card mdl-shadow--2dp mdl-card--horizontal" style="display: inline-block;padding-right: 15px" th:each="book : ${recommendations}">
+            <div class="card-card mdl-card__media ">
+                <a class="card-recommended-a mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
                    data-upgraded=",MaterialButton,MaterialRipple"
                    th:href="@{'/book/' + ${book.id}}">
-                    <img class = "card-image" th:src="${book.picture}" alt="img">
+                    <img class = "card-image-recommend" th:src="${book.picture}" alt="img">
                 </a>
             </div>
         </div>
