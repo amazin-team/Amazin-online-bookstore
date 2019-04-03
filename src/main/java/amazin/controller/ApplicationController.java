@@ -10,13 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import amazin.repository.BookRepository;
+import amazin.service.BookService;
 
 @Controller
 public class ApplicationController {
 
     @Autowired
-    BookRepository bookRepository;
+    BookService bookService;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -32,9 +32,11 @@ public class ApplicationController {
         User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
         ShoppingCart userCart = shoppingCartRepository.findByUser(currentUser);
 
-        model.addAttribute(BookController.MODEL_ATTRIBUTE_BOOK, bookRepository.findAll());
+        model.addAttribute(BookController.MODEL_ATTRIBUTE_BOOK, bookService.getAll());
         model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
         model.addAttribute("cart", userCart);
+        model.addAttribute(BookController.MODEL_ATTRIBUTE_RECOMMENDATIONS,
+                           bookService.getAllRecommendedBooks(currentUser));
 
         return "index";
     }
