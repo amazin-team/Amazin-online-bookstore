@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout}">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
     <body>
     <div layout:fragment="content">
-        <div th:replace=" ~{fragments/_bookBrowser.html :: dataTable} "></div>
+        <div th:replace=" ~{fragments/_bookShower.html :: dataTable} "></div>
     </div>
-
-    <th:block layout:fragment="script">
-        <script src="/js/book_view.js"></script>
-    </th:block>
 </body>
 </html>
