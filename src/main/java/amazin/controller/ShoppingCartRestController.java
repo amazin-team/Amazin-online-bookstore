@@ -1,16 +1,17 @@
 package amazin.controller;
 
-import amazin.model.Book;
 import amazin.model.Item;
 import amazin.model.ShoppingCart;
+import amazin.model.User;
+import amazin.repository.ShoppingCartRepository;
+import amazin.repository.UserRepository;
 import amazin.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.json.simple.JSONObject;
-
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 /**
  * Created by lauramachado on 2019-04-01.
@@ -23,15 +24,24 @@ public class ShoppingCartRestController {
     @Autowired
     ShoppingCartService shoppingCartService;
 
-    @PostMapping("/cart/decrement/{bookId}")
-    public JSONObject decrementItem(@PathVariable("bookId") Long bookId, HttpSession session) {
-        ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-        Item item = cart.getItem(bookId);
+    @Autowired
+    ShoppingCartRepository cartRepository;
 
-        if(item.getQuantity() > 1){
-            item.decrement();
-            cart.decrementItemCount();
-        }
+    @Autowired
+    UserRepository userRepository;
+
+
+
+    @PostMapping("/cart/decrement/{bookId}")
+    public JSONObject decrementItem(@PathVariable("bookId") Long bookId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        ShoppingCart cart = cartRepository.findByUser(user);
+
+        Item item = cart.getItem(bookId);
+        shoppingCartService.decrementItem(cart, item);
 
         JSONObject obj = new JSONObject();
         obj.put("item", item);
@@ -42,12 +52,15 @@ public class ShoppingCartRestController {
     }
 
     @PostMapping("/cart/increment/{bookId}")
-    public JSONObject incrementItem(@PathVariable("bookId") Long bookId, HttpSession session) {
-        ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-        Item item = cart.getItem(bookId);
+    public JSONObject incrementItem(@PathVariable("bookId") Long bookId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        item.increment();
-        cart.incrementItemCount();
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        ShoppingCart cart = cartRepository.findByUser(user);
+
+        Item item = cart.getItem(bookId);
+        shoppingCartService.incrementItem(cart, item);
 
         JSONObject obj = new JSONObject();
         obj.put("item", item);
@@ -57,29 +70,23 @@ public class ShoppingCartRestController {
         return obj;
     }
 
-    @RequestMapping("/cart/addToCart/{bookId}")
-    public ShoppingCart addToCart(@PathVariable("bookId") Long bookId, HttpSession session){
-        ShoppingCart cart;
+    @PostMapping("/cart/addToCart/{bookId}")
+    public JSONObject addToCart(@PathVariable("bookId") Long bookId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        if (session.getAttribute("cart") == null) {
-            cart = shoppingCartService.createCart();
-            shoppingCartService.addBook(cart, bookId);
-        } else {
-            cart = (ShoppingCart) session.getAttribute("cart");
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        ShoppingCart cart = cartRepository.findByUser(user);
 
-            int index = cart.itemExists(bookId);
-
-            if (index == -1) {
-                shoppingCartService.addBook(cart, bookId);
-            } else {
-                Item i = cart.getItems().get(index);
-                i.increment();
-            }
-
+        if(cart == null){
+            cart = shoppingCartService.createCart(user);
         }
 
-        session.setAttribute("cart", cart);
-        cart.incrementItemCount();
-        return cart;
+        shoppingCartService.addItem(cart, bookId);
+
+        JSONObject obj = new JSONObject();
+        obj.put("itemCount", cart.getItemCount());
+
+        return obj;
     }
 }

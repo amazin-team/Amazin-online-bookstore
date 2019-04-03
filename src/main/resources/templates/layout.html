@@ -103,7 +103,7 @@
                             <i class="fas fa-shopping-cart"></i>
                             <!-- Counter - Messages -->
 
-                            <span th:if="${session.cart != null and !session.cart.items.empty}" class="badge badge-danger badge-counter cart-banner-counter" th:text="${session.cart.itemCount}"></span>
+                            <span th:if="${cart != null and !cart.items.empty}" class="badge badge-danger badge-counter cart-banner-counter" th:text="${cart.itemCount}"></span>
                         </a>
                     </li>
 

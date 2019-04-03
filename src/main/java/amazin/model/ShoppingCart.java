@@ -2,10 +2,12 @@ package amazin.model;
 
 
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,44 +16,63 @@ import java.util.Map;
 /**
  * Created by lauramachado on 2019-03-18.
  */
+@Entity
+@Indexed
+@Table(name="carts")
 public class ShoppingCart {
 
-    private ArrayList<Item> items;
-    private int itemCount;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "cart_id", updatable = false, nullable = false)
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private User user;
+
+    @Column(name="items")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Item> items;
 
     public ShoppingCart() {
-
         this.items = new ArrayList<>();
-        itemCount = 0;
     }
 
-    public ArrayList<Item> getItems() {
+    public Long getId(){
+        return this.id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public User getUser(){
+        return this.user;
+    }
+
+    public List<Item> getItems() {
         return this.items;
     }
 
-    public int getItemCount(){
-        return this.itemCount;
+    public void setItems(ArrayList<Item> items){
+        this.items = items;
+    }
+
+    public int getItemCount() {
+        int count=0;
+        for(Item i: items){
+            count+= i.getQuantity();
+        }
+
+        return count;
     }
 
     public void addItem(Item item){
         this.items.add(item);
-    }
-
-    public void updateItemCount(){
-        int count = 0;
-        for(Item item : items){
-            count+=item.getQuantity();
-        }
-
-        this.itemCount = count;
-    }
-
-    public void incrementItemCount(){
-        this.itemCount = this.itemCount + 1;
-    }
-
-    public void decrementItemCount(){
-        this.itemCount = this.itemCount - 1;
     }
 
     public Item getItem(Long bookId){
@@ -74,18 +95,20 @@ public class ShoppingCart {
     }
 
     public void removeItem(Long bookId){
-        items.remove(this.getItem(bookId));
-        updateItemCount();
+        Item item = this.getItem(bookId);
+        items.remove(item);
     }
 
-    public int itemExists(Long bookId) {
+    public boolean itemExists(Long bookId) {
         for(int i=0; i < items.size(); i++){
             if(items.get(i).getBook().getId().equals(bookId)){
-                return i;
+                return true;
             }
         }
 
-        return -1;
+        return false;
     }
+
+
 
 }

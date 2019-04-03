@@ -3,16 +3,24 @@ package amazin.controller;
 import amazin.model.Book;
 import amazin.model.Item;
 import amazin.model.ShoppingCart;
+import amazin.model.User;
 import amazin.repository.BookRepository;
+import amazin.repository.ShoppingCartRepository;
+import amazin.repository.UserRepository;
 import amazin.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.lang.reflect.Array;
+import java.security.Principal;
 import java.util.*;
 
 /**
@@ -26,33 +34,36 @@ public class ShoppingCartController {
     ShoppingCartService shoppingCartService;
 
     @Autowired
-    BookRepository bookRepository;
+    ShoppingCartRepository cartRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public static final String VIEW_SHOPPING_CART = "shopping-cart";
 
     @GetMapping("/cart/delete/{bookId}")
-    public String deleteCartItem(@PathVariable("bookId") Long bookId, HttpSession session){
-            ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-            cart.removeItem(bookId);
+    public String deleteCartItem(@PathVariable("bookId") Long bookId, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-            return VIEW_SHOPPING_CART;
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        ShoppingCart cart = cartRepository.findByUser(user);
+        shoppingCartService.removeItem(cart, bookId);
+
+
+        model.addAttribute("cart", cart);
+        return VIEW_SHOPPING_CART;
     }
 
     @GetMapping("/cart")
-    public String viewCart(HttpSession session, Model model){
-        ArrayList<Item> items = new ArrayList<>();
-        int itemCount = 0;
-        double total = 0;
-        if (session.getAttribute("cart") != null) {
-            ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-            items = cart.getItems();
-            total = cart.getTotal();
-            session.setAttribute("cart", cart);
-        }
+    public String viewCart(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        model.addAttribute("items", items);
-        model.addAttribute("total", total);
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        ShoppingCart cart = cartRepository.findByUser(user);
 
+        model.addAttribute("cart", cart);
         return VIEW_SHOPPING_CART;
     }
 
