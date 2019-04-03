@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @Indexed
 @Table(name="users")
-public class User {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
