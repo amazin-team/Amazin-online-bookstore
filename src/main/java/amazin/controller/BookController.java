@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import amazin.model.Book;
+import amazin.model.ShoppingCart;
+import amazin.repository.ShoppingCartRepository;
 import amazin.model.Tag;
 import amazin.service.SecurityService;
 import amazin.service.BookService;
@@ -47,6 +49,8 @@ public class BookController {
     private UserRepository userRepository;
     @Autowired
     private SecurityServiceImpl securityService;
+    @Autowired
+    ShoppingCartRepository shoppingCartRepository;
 
     @Autowired
     private final AmazonService amazonService;
@@ -184,6 +188,15 @@ public class BookController {
             model.addAttribute(MODEL_ATTRIBUTE_BOOK, null);
         else
             model.addAttribute(MODEL_ATTRIBUTE_BOOK, searchResults);
+
+        User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
+        ShoppingCart userCart = shoppingCartRepository.findByUser(currentUser);
+
+        model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
+        model.addAttribute("cart", userCart);
+        model.addAttribute(BookController.MODEL_ATTRIBUTE_RECOMMENDATIONS,
+                           bookService.getAllRecommendedBooks(currentUser));
+
         return "index";
     }
 
