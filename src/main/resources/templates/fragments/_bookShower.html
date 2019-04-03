@@ -14,9 +14,6 @@
                     <a class="add-cart-button" th:onclick="|addBookToCart(${book.id})|" href="#">Add to cart &nbsp; <i class="fas fa-plus"></i></a>
                 </div>
             </div>
-            <div>
-                <a class="add-cart-button" th:onclick="|addBookToCart(${book.id})|" href="#"><i class="fas fa-plus"></i>Add to cart</a>
-            </div>
             <div class="mdl-card__supporting-text" th:text="${book.description}"></div>
             <div class="mdl-card__supporting-text" th:text="${book.author}">Author:</div>
 
