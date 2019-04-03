@@ -194,3 +194,35 @@ body {
     background-color: #4e73df;
     color: white;
 }
+
+.mdl-card + .mdl-card {
+    margin-top: 40px;
+}
+
+.mdl-card--horizontal {
+    flex-direction: column;
+    height: 2vh; /* 1 */
+    padding-left: 150px;
+    width: 100%;
+}
+.mdl-card__media {
+        left: 0;
+        position: absolute;
+        width: 150px;
+    }
+
+.mdl-card__view{
+    left:0;
+    width: 80%;
+
+}
+
+    .mdl-card__supporting-text {
+        flex: 1 1 auto;
+        width: auto;
+    }
+
+    .card-image {
+        width: 150px;
+        height: 200px;
+    }

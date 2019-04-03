@@ -1,0 +1,24 @@
+<div th:fragment="dataTable" th:switch="${books}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h2 th:case="null">Book Catalogue is Empty!</h2>
+    <div th:case="*">
+
+        <div class="mdl-card mdl-shadow--2dp mdl-card--horizontal" th:each="book : ${books}" style="width:100%">
+            <div class="mdl-card__media">
+                <img class = "card-image" th:src="${book.picture}" alt="img">
+            </div>
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text" th:text="${book.name}"></h2>
+            </div>
+            <div class="mdl-card__supporting-text" th:text="${book.description}"></div>
+            <div class="mdl-card__supporting-text" th:text="${book.author}">Author:</div>
+
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   data-upgraded=",MaterialButton,MaterialRipple"
+                   th:href="@{'/book/' + ${book.id}}">
+                    View book
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

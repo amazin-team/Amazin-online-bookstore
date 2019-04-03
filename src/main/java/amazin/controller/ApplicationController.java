@@ -24,6 +24,9 @@ public class ApplicationController {
     @Autowired
     ShoppingCartRepository shoppingCartRepository;
 
+    public static final String VIEW_ADMIN = "admin";
+
+
     @GetMapping("/")
     public String index(Model model) {
         User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
@@ -34,5 +37,11 @@ public class ApplicationController {
         model.addAttribute("cart", userCart);
 
         return "index";
+    }
+
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        model.addAttribute(BookController.MODEL_ATTRIBUTE_BOOK, bookRepository.findAll());
+        return "admin";
     }
 }

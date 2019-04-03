@@ -1,0 +1,33 @@
+<div th:fragment="dataTable" th:switch="${books}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h2 th:case="null">Book Catalogue is Empty!</h2>
+    <div th:case="*">
+
+        <div class="mdl-card mdl-shadow--2dp mdl-card--horizontal" th:each="book : ${books}" style="width:100%;height:100%">
+            <div class="mdl-card__view">
+                <img class = "view-image" th:src="${book.picture}" alt="img">
+            </div>
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text" th:text="${book.name}"></h2>
+            </div>
+            <div class="mdl-card__supporting-text" th:text="'Description: ' + ${book.description}"></div>
+            <div class="mdl-card__supporting-text" th:text="'Author: ' + ${book.author}"></div>
+            <div class="mdl-card__supporting-text" th:text="'Publisher: ' + ${book.publisher}"></div>
+            <div class="mdl-card__supporting-text" th:text="'ISBN: ' + ${book.ISBN}"></div>
+            <div class="mdl-card__supporting-text" th:text="'Inventory: ' + ${book.Inventory}"></div>
+            <div class="mdl-card__supporting-text" th:text="'Price: ' + ${book.Price}"></div>
+
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   data-upgraded=",MaterialButton,MaterialRipple"
+                   th:href="@{/edit/{id}(id=${book.id})}">Edit</a>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <form class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   data-upgraded=",MaterialButton,MaterialRipple"
+                   th:action="@{/delete/{id}(id=${book.id})}" method="post">
+                            <input class="book-delete-control" type="submit" value="Delete">
+                        </form>
+            </div>
+        </div>
+    </div>
+</div>
