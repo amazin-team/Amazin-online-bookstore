@@ -12,16 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import amazin.model.Book;
 import amazin.service.BookService;
 import amazin.service.HibernateSearchService;
+
+import java.io.File;
+import amazin.service.AmazonService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @SessionAttributes("books")
@@ -43,8 +42,12 @@ public class BookController {
     @Autowired
     private SecurityServiceImpl securityService;
 
-    public BookController(final BookService bookService) {
+    @Autowired
+    private final AmazonService amazonService;
+
+    public BookController(final BookService bookService, final AmazonService amazonService) {
         this.bookService = bookService;
+        this.amazonService = amazonService;
     }
 
     @GetMapping("/addbook")
@@ -56,13 +59,13 @@ public class BookController {
     }
 
     @PostMapping("/addbook")
-    public String addBook(@Valid @ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result) {
+    public String addBook(@RequestParam(name = "picture") MultipartFile picture, @Valid @ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result) {
         if (result.hasErrors()) {
             return VIEW_CREATE_BOOK;
         }
 
         bookService.create(book);
-
+        book.setPicture_url(uploadFile(picture));
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
     }
 
@@ -107,9 +110,24 @@ public class BookController {
 
     @PostMapping("delete/{id}")
     public String deleteBook(@PathVariable("id") Long id) {
-        bookService.delete(id);
+        Optional<Book> deletedBook = bookService.delete(id);
+
+        if (deletedBook.isPresent()) {
+            Book book = deletedBook.get();
+            deleteFile(book.getPicture_url());
+        }
 
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
+    }
+
+    @PostMapping("/storage/uploadFile")
+    public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
+        return this.amazonService.uploadFile(file);
+    }
+
+    @DeleteMapping("/storage/deleteFile")
+    public String deleteFile(@RequestPart(value = "url") String fileUrl) {
+        return this.amazonService.deleteFileFromS3Bucket(fileUrl);
     }
 
     @GetMapping("/search")

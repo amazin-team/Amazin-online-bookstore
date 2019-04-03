@@ -42,7 +42,7 @@ public class BookService {
             book.setISBN(updatedBook.getISBN());
             book.setInventory(updatedBook.getInventory());
             book.setName(updatedBook.getName());
-            book.setPicture(updatedBook.getPicture());
+            book.setPicture_url(updatedBook.getPicture_url());
             book.setPrice(updatedBook.getPrice());
             book.setPublisher(updatedBook.getPublisher());
             repository.save(book);

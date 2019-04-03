@@ -67,7 +67,7 @@ public class BaseTest {
             break;
 
         case PICTURE:
-            book.setPicture((String) val);
+            book.setPicture_url((String) val);
             break;
 
         case PUBLISHER:
@@ -129,7 +129,7 @@ public class BaseTest {
             break;
 
         case PICTURE:
-            result = book.getPicture();
+            result = book.getPicture_url();
             if (defaultValue)
                 expected = DEFAULT_PICTURE;
             break;
