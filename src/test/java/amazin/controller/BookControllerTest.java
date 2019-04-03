@@ -12,7 +12,6 @@ import static org.mockito.Mockito.when;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Null;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +22,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import amazin.BookTestUtil;
 import amazin.model.Book;
@@ -43,7 +41,10 @@ public class BookControllerTest {
         controller = new BookController(bookService);
     }
 
-    /** TODO fix the mock calls for SecurityServiceImpl so this doesn't throw a null pointer exception */
+    /**
+     * TODO fix the mock calls for SecurityServiceImpl so this doesn't throw a null
+     * pointer exception
+     */
     @Test(expected = NullPointerException.class)
     public void showAddBookForm() {
         BindingAwareModelMap model = new BindingAwareModelMap();
@@ -65,7 +66,10 @@ public class BookControllerTest {
         assertEquals(formModel.getPrice(), 0, 0.1);
     }
 
-    /** TODO fix the mock calls for SecurityServiceImpl so this doesn't throw a null pointer exception */
+    /**
+     * TODO fix the mock calls for SecurityServiceImpl so this doesn't throw a null
+     * pointer exception
+     */
     @Test(expected = NullPointerException.class)
     public void showUpdateBookForm() {
         BindingAwareModelMap model = new BindingAwareModelMap();
@@ -110,22 +114,17 @@ public class BookControllerTest {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest("POST", "/addbook");
         BindingResult result = bind(mockRequest, formModel);
 
-        RedirectAttributesModelMap attributes = new RedirectAttributesModelMap();
-
-        String view = controller.addBook(formModel, result, attributes);
+        String view = controller.addBook(formModel, result);
 
         verify(bookService, times(1)).create(formModel);
         verifyNoMoreInteractions(bookService);
 
         String expectedView = BookTestUtil.createRedirectViewPath(BookController.REQUEST_MAPPING_BOOK);
         assertEquals(expectedView, view);
-
-        assertEquals(Long.valueOf((String) attributes.get(BookController.PARAMETER_BOOK_ID)), model.getId());
     }
 
     @Test
     public void deleteBook() {
-        RedirectAttributesModelMap attributes = new RedirectAttributesModelMap();
 
         Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
@@ -134,7 +133,7 @@ public class BookControllerTest {
         Optional<Book> optionalBook = Optional.of(model);
         when(bookService.delete(BookTestUtil.ID)).thenReturn(optionalBook);
 
-        String view = controller.deleteBook(BookTestUtil.ID, attributes);
+        String view = controller.deleteBook(BookTestUtil.ID);
 
         verify(bookService, times(1)).delete(BookTestUtil.ID);
         verifyNoMoreInteractions(bookService);
