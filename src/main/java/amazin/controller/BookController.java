@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import amazin.service.SecurityService;
+import amazin.model.User;
+import amazin.repository.UserRepository;
+import amazin.service.SecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,10 @@ public class BookController {
 
     @Autowired
     private final BookService bookService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private SecurityServiceImpl securityService;
 
     public BookController(final BookService bookService) {
         this.bookService = bookService;
@@ -43,6 +49,8 @@ public class BookController {
 
     @GetMapping("/addbook")
     public String addBookForm(Model model) {
+        User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
+        model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
         model.addAttribute(MODEL_ATTRIBUTE_BOOK, new Book());
         return VIEW_CREATE_BOOK;
     }
@@ -64,6 +72,8 @@ public class BookController {
     @GetMapping("/edit/{id}")
     public String updateBookForm(@PathVariable("id") Long id, Model model) {
         Optional<Book> optionalBook = bookService.findById(id);
+        User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
+        model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
 
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
