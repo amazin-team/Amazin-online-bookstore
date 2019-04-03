@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import amazin.model.Book;
 import amazin.service.BookService;
@@ -56,15 +55,12 @@ public class BookController {
     }
 
     @PostMapping("/addbook")
-    public String addBook(@Valid @ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result,
-            RedirectAttributes attributes) {
+    public String addBook(@Valid @ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result) {
         if (result.hasErrors()) {
             return VIEW_CREATE_BOOK;
         }
 
-        Book addedBook = bookService.create(book);
-
-        attributes.addAttribute(PARAMETER_BOOK_ID, addedBook.getId());
+        bookService.create(book);
 
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
     }
@@ -85,26 +81,20 @@ public class BookController {
 
     @PostMapping("/update/{id}")
     public String updateBook(@PathVariable("id") Long id, @Valid @ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book,
-            BindingResult result, RedirectAttributes attributes) {
+            BindingResult result) {
         if (result.hasErrors()) {
             book.setId(id);
             return VIEW_UPDATE_BOOK;
         }
 
-        Book updatedBook = bookService.update(book);
-
-        attributes.addAttribute(PARAMETER_BOOK_ID, updatedBook.getId());
+        bookService.update(book);
 
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
     }
 
     @GetMapping("delete/{id}")
-    public String deleteBook(@PathVariable("id") Long id, RedirectAttributes attributes) {
-        Optional<Book> deletedBook = bookService.delete(id);
-
-        if (deletedBook.isPresent()) {
-            attributes.addAttribute(PARAMETER_BOOK_ID, deletedBook.get().getId());
-        }
+    public String deleteBook(@PathVariable("id") Long id) {
+        bookService.delete(id);
 
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
     }

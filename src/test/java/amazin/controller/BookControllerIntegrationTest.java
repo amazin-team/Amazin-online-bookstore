@@ -20,7 +20,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import amazin.BookTestUtil;
 import amazin.model.Book;
@@ -59,8 +58,7 @@ public class BookControllerIntegrationTest {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest("POST", "/update/" + BookTestUtil.ID);
         BindingResult result = bind(mockRequest, formObject);
 
-        RedirectAttributesModelMap attributes = new RedirectAttributesModelMap();
-        String view = controller.updateBook(BookTestUtil.ID, formObject, result, attributes);
+        String view = controller.updateBook(BookTestUtil.ID, formObject, result);
 
         verify(repo, times(1)).save(formObject);
         verify(repo, times(1)).findById(BookTestUtil.ID);
