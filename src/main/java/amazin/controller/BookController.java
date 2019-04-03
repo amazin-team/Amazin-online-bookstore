@@ -92,7 +92,7 @@ public class BookController {
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
     }
 
-    @GetMapping("delete/{id}")
+    @PostMapping("delete/{id}")
     public String deleteBook(@PathVariable("id") Long id) {
         bookService.delete(id);
 
