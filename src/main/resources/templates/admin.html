@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+    <body>
+    <div layout:fragment="content">
+        <div th:replace=" ~{fragments/_bookBrowser.html :: dataTable} "></div>
+    </div>
+
+    <th:block layout:fragment="script">
+        <script src="/js/book_view.js"></script>
+    </th:block>
+</body>
+</html>
