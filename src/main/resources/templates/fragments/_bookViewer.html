@@ -23,9 +23,11 @@
                    th:href="@{/edit/{id}(id=${book.id})}">Edit</a>
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                <form class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
                    data-upgraded=",MaterialButton,MaterialRipple"
-                   th:href="@{/delete/{id}(id=${book.id})}">Delete</a>
+                   th:action="@{/delete/{id}(id=${book.id})}" method="post">
+                            <input class="book-delete-control" type="submit" value="Delete">
+                        </form>
             </div>
         </div>
     </div>
