@@ -1,6 +1,9 @@
 package amazin.service;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import amazin.model.Book;
 import amazin.model.Tag;
+import amazin.model.User;
 import amazin.repository.BookRepository;
 
 @Service
@@ -30,6 +34,20 @@ public class BookService {
 
     public List<Book> getAllBooksMatching(Tag tag) {
         return (List<Book>) repository.findDistinctByTags(tag);
+    }
+
+    public Set<Book> getAllRecommendedBooks(User user) {
+        if (user == null) {
+            return new HashSet<Book>();
+        }
+        Set<Tag> tags = user.getTags();
+        List<Book> books = new ArrayList<>();
+
+        for (Tag tag: tags) {
+            books.addAll(getAllBooksMatching(tag));
+        }
+
+        return new HashSet<Book>(books);
     }
 
     public Book create(Book book) {
