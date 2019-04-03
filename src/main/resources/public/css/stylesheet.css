@@ -134,7 +134,9 @@ body {
     cursor: pointer;
 }
 
-.cart-item-control, .cart-amount-control{
+
+
+.cart-item-control, .cart-amount-control, .book-delete-control{
     display:inline-block;
     text-decoration: underline;
 }
