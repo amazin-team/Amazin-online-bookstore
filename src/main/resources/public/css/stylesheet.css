@@ -139,7 +139,6 @@ body {
     cursor: pointer;
 }
 
-<<<<<<< HEAD
 .book-delete-control {
     background: none !important;
     color: #4e73df;
@@ -195,7 +194,6 @@ body {
     background-color: #4e73df;
     color: white;
 }
-=======
 
 .mdl-card + .mdl-card {
     margin-top: 40px;
@@ -228,4 +226,3 @@ body {
         width: 150px;
         height: 200px;
     }
->>>>>>> feat(index): Add card layout to index page
