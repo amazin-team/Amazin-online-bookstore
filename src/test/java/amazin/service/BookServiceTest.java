@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import amazin.repository.TagRepository;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -22,19 +23,24 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import amazin.BookTestUtil;
 import amazin.model.Book;
 import amazin.repository.BookRepository;
+import amazin.repository.TagRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BookServiceTest {
-    @InjectMocks
+
     BookService service;
 
     @Mock
     BookRepository repository;
 
+    @Mock
+    TagRepository tagRepository;
+
     private static final Long ID = 1L;
 
     @Before
     public void setUp() {
+        service = new BookService(repository, tagRepository);
         BookTestUtil.setup();
     }
 
