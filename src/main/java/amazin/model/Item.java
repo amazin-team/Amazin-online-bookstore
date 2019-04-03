@@ -19,7 +19,6 @@ public class Item {
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
     private Book book;
 
     @Column(name="quantity")
@@ -27,9 +26,12 @@ public class Item {
 
     public Item(){}
 
-    public Item(Book book, int quantity) {
-        this.book = book;
-        this.quantity = quantity;
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public Long getId(){
+        return this.id;
     }
 
     public Book getBook(){

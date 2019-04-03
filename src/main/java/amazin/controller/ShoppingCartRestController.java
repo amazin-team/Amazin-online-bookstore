@@ -41,7 +41,7 @@ public class ShoppingCartRestController {
         ShoppingCart cart = cartRepository.findByUser(user);
 
         Item item = cart.getItem(bookId);
-        shoppingCartService.decrementItem(cart, item);
+        shoppingCartService.decrementItem(item);
 
         JSONObject obj = new JSONObject();
         obj.put("item", item);
@@ -60,7 +60,7 @@ public class ShoppingCartRestController {
         ShoppingCart cart = cartRepository.findByUser(user);
 
         Item item = cart.getItem(bookId);
-        shoppingCartService.incrementItem(cart, item);
+        shoppingCartService.incrementItem(item);
 
         JSONObject obj = new JSONObject();
         obj.put("item", item);

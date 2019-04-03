@@ -38,7 +38,7 @@ public class ShoppingCartService {
     public void addItem(ShoppingCart cart, long bookId){
         if(cart.itemExists(bookId)){
             Item i = cart.getItem(bookId);
-            incrementItem(cart, i);
+            incrementItem(i);
         }else{
             Item item = createItem(bookId);
             if(item != null){
@@ -60,7 +60,9 @@ public class ShoppingCartService {
 
         if(book.isPresent()){
             int amount = 1;
-            Item i = new Item(book.get(), amount);
+            Item i = new Item();
+            i.setBook(book.get());
+            i.setQuantity(amount);
             itemRepository.save(i);
 
             return i;
@@ -69,14 +71,14 @@ public class ShoppingCartService {
         return null;
     }
 
-    public void incrementItem(ShoppingCart cart, Item i){
+    public void incrementItem(Item i){
         if((i.getQuantity()+1) <= i.getBook().getInventory()){
             i.increment();
             itemRepository.save(i);
         }
     }
 
-    public void decrementItem(ShoppingCart cart, Item i){
+    public void decrementItem(Item i){
         if(i.getQuantity() > 1){
             i.decrement();
             itemRepository.save(i);
