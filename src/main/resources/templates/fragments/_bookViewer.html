@@ -9,13 +9,12 @@
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text" th:text="${book.name}"></h2>
             </div>
-            <div class="mdl-card__supporting-text" th:text="@{Description: {description}(description=${book.description})}"></div>
-
-            <div class="mdl-card__supporting-text" th:text="@{Author: {author}(author=${book.author})}"></div>
-            <div class="mdl-card__supporting-text" th:text="@{Publisher: {publisher}(publisher=${book.publisher})}"></div>
-            <div class="mdl-card__supporting-text" th:text="@{ISBN: {ISBN}(ISBN=${book.ISBN})}"></div>
-            <div class="mdl-card__supporting-text" th:text="@{Inventory: {Inventory}(Inventory=${book.Inventory})}"></div>
-            <div class="mdl-card__supporting-text" th:text="@{Price: {Price}(Price=${book.Price})}"></div>
+            <div class="mdl-card__supporting-text" th:text="'Description: ' + ${book.description}"></div>
+            <div class="mdl-card__supporting-text" th:text="'Author: ' + ${book.author}"></div>
+            <div class="mdl-card__supporting-text" th:text="'Publisher: ' + ${book.publisher}"></div>
+            <div class="mdl-card__supporting-text" th:text="'ISBN: ' + ${book.ISBN}"></div>
+            <div class="mdl-card__supporting-text" th:text="'Inventory: ' + ${book.Inventory}"></div>
+            <div class="mdl-card__supporting-text" th:text="'Price: ' + ${book.Price}"></div>
 
             <div class="mdl-card__actions mdl-card--border">
                 <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
