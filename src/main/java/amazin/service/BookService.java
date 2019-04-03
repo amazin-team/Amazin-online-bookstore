@@ -13,15 +13,18 @@ import amazin.model.Book;
 import amazin.model.Tag;
 import amazin.model.User;
 import amazin.repository.BookRepository;
+import amazin.repository.TagRepository;
 
 @Service
 public class BookService {
 
     private final BookRepository repository;
+    private final TagRepository tagRepository;
 
     @Autowired
-    public BookService(BookRepository repository) {
+    public BookService(BookRepository repository, TagRepository tagRepository) {
         this.repository = repository;
+        this.tagRepository = tagRepository;
     }
 
     public Optional<Book> findById(Long id) {
@@ -50,13 +53,27 @@ public class BookService {
         return new HashSet<Book>(books);
     }
 
+    public void updateTagRepository(Book book) {
+        if (book == null)
+            return;
+        for (Tag tag: book.getTags()) {
+            Tag retrievedTag = tagRepository.findById(tag.getId());
+            if (retrievedTag == null) {
+                tagRepository.save(tag);
+            }
+        }
+    }
+
     public Book create(Book book) {
+        updateTagRepository(book);
         repository.save(book);
         return book;
     }
 
     public Book update(Book updatedBook) {
         Optional<Book> bookToBeUpdated = repository.findById(updatedBook.getId());
+
+        updateTagRepository(updatedBook);
 
         if (bookToBeUpdated.isPresent()) {
             Book book = bookToBeUpdated.get();
