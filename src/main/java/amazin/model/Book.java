@@ -196,7 +196,7 @@ public class Book {
 
         returnString += "]'";
 
-        return returnString + '\'' +  ", ISBN=" + ISBN + ", picture='" + picture + '\''
+        return returnString + '\'' +  ", ISBN=" + ISBN + ", picture='" + picture_url + '\''
                 + ", author='" + author + '\'' + ", publisher='" + publisher
                 + '\'' + ", inventory='" + inventory + '\'' + ", price='" + price + '\'' + '}';
     }
