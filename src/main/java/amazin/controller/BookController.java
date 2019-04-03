@@ -30,6 +30,7 @@ public class BookController {
     public static final String MODEL_ATTRIBUTE_BOOK = "books";
     public static final String PARAMETER_BOOK_ID = "id";
     public static final String REQUEST_MAPPING_BOOK = "/";
+    public static final String VIEW_BOOK = "view-book";
 
     @Autowired
     private HibernateSearchService searchservice;
@@ -58,6 +59,18 @@ public class BookController {
 
         attributes.addAttribute(PARAMETER_BOOK_ID, addedBook.getId());
 
+        return createRedirectViewPath(REQUEST_MAPPING_BOOK);
+    }
+
+    @GetMapping("/book/{id}")
+    public String getBookForm(@PathVariable("id") Long id, Model model) {
+        Optional<Book> optionalBook = bookService.findById(id);
+
+        if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+            model.addAttribute(MODEL_ATTRIBUTE_BOOK, book);
+            return VIEW_BOOK;
+        }
         return createRedirectViewPath(REQUEST_MAPPING_BOOK);
     }
 
