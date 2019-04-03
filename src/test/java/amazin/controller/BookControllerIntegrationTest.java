@@ -24,6 +24,7 @@ import org.springframework.web.bind.WebDataBinder;
 import amazin.BookTestUtil;
 import amazin.model.Book;
 import amazin.repository.BookRepository;
+import amazin.repository.TagRepository;
 import amazin.service.BookService;
 import amazin.service.AmazonService;
 
@@ -37,10 +38,13 @@ public class BookControllerIntegrationTest {
     @Mock
     private BookRepository repo;
 
+    @Mock
+    private TagRepository tagRepo;
+
     @Before
     public void setUp() {
         BookTestUtil.setup();
-        bookService = new BookService(repo);
+        bookService = new BookService(repo, tagRepo);
         amazonService = new AmazonService();
         controller = new BookController(bookService, amazonService);
     }
