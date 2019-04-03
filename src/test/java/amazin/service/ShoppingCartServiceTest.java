@@ -33,7 +33,7 @@ public class ShoppingCartServiceTest {
     @Mock
     ShoppingCartRepository repository;
 
-    private static final Long ID = 1L;
+    private static final long ID = 1L;
 
     @Test
     public void createTest() {
@@ -47,7 +47,6 @@ public class ShoppingCartServiceTest {
 
         ShoppingCart model = cartArgument.getValue();
 
-        assertNotNull(model.getId());
         assertEquals(cart.getUser(), model.getUser());
     }
 }
