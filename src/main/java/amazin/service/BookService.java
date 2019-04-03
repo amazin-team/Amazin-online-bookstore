@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import amazin.model.Book;
+import amazin.model.Tag;
 import amazin.repository.BookRepository;
 
 @Service
@@ -25,6 +26,10 @@ public class BookService {
 
     public List<Book> getAll() {
         return (List<Book>) repository.findAll();
+    }
+
+    public List<Book> getAllBooksMatching(Tag tag) {
+        return (List<Book>) repository.findDistinctByTags(tag);
     }
 
     public Book create(Book book) {
