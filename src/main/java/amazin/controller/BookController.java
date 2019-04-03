@@ -33,6 +33,7 @@ public class BookController {
     public static final String VIEW_CREATE_BOOK = "create-book";
     public static final String VIEW_UPDATE_BOOK = "update-book";
     public static final String MODEL_ATTRIBUTE_BOOK = "books";
+    public static final String MODEL_ATTRIBUTE_RECOMMENDATIONS = "recommendedBooks";
     public static final String PARAMETER_BOOK_ID = "id";
     public static final String REQUEST_MAPPING_BOOK = "/";
     public static final String VIEW_BOOK = "view-book";

@@ -1,0 +1,34 @@
+<div th:fragment="dataTable" th:switch="${recommendedBooks}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h3 th:case="null">No recommendations at the current moment..</h3>
+    <div th:case="*">
+	<h3>You may like:</h3>
+	<table id="recommendations_table">
+	    <thead>
+	    <tr>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Author</th>
+		<th>Publisher</th>
+		<th>ISBN</th>
+		<th>Inventory</th>
+		<th>Price</th>
+		<th>Edit</th>
+		<th>Delete</th>
+	    </tr>
+	    </thead>
+	    <tbody>
+	    <tr th:each="book : ${recommendedBooks}">
+		<td th:text="${book.name}"></td>
+		<td th:text="${book.description}"></td>
+		<td th:text="${book.author}"></td>
+		<td th:text="${book.publisher}"></td>
+		<td th:text="${book.ISBN}"></td>
+		<td th:text="${book.Inventory}"></td>
+		<td th:text="${book.Price}"></td>
+		<td><a th:href="@{/edit/{id}(id=${book.id})}">Edit</a></td>
+		<td><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
+	    </tr>
+	    </tbody>
+	</table>
+    </div>
+</div>
