@@ -139,6 +139,12 @@ body {
     text-decoration: underline;
 }
 
+.cart-item-control{
+    border:none;
+    background-color:transparent;
+    padding:0;
+}
+
 .cart-amount-control-button{
     border:none;
     background:transparent;

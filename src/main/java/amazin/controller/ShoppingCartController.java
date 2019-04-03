@@ -8,6 +8,7 @@ import amazin.repository.BookRepository;
 import amazin.repository.ShoppingCartRepository;
 import amazin.repository.UserRepository;
 import amazin.service.ShoppingCartService;
+import org.jboss.jdeparser.FormatPreferences;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,19 +38,26 @@ public class ShoppingCartController {
     ShoppingCartRepository cartRepository;
 
     @Autowired
+    BookRepository bookRepository;
+
+    @Autowired
     UserRepository userRepository;
 
     public static final String VIEW_SHOPPING_CART = "shopping-cart";
 
-    @GetMapping("/cart/delete/{bookId}")
+    @PostMapping("/cart/delete/{bookId}")
     public String deleteCartItem(@PathVariable("bookId") Long bookId, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         User user = userRepository.findByEmail(userDetails.getUsername());
         ShoppingCart cart = cartRepository.findByUser(user);
-        shoppingCartService.removeItem(cart, bookId);
 
+        Optional<Book> book = bookRepository.findById(bookId);
+
+        if(book.isPresent()){
+            shoppingCartService.removeItem(cart, bookId);
+        }
 
         model.addAttribute("cart", cart);
         return VIEW_SHOPPING_CART;
