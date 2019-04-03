@@ -3,6 +3,8 @@ package amazin.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by lauramachado on 2019-04-03.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
 public class ShoppingCartTest {
 
     private ShoppingCart cart;
@@ -87,7 +90,8 @@ public class ShoppingCartTest {
 
         cart.setItems(items);
 
-        assertEquals((15*3+30*2), cart.getTotal());
+        double expectedTotal = (15*3)+(30*2);
+        assertEquals(expectedTotal, cart.getTotal(),0);
     }
 
 
