@@ -48,7 +48,7 @@ public class AmazonService {
     private void uploadFileTos3bucket(String fileName, File file) {
         PutObjectRequest req = new PutObjectRequest(bucketName, fileName, file)
                 .withCannedAcl(CannedAccessControlList.PublicRead);
-        s3client.putObject(req);
+        if (req.getBucketName() != null) s3client.putObject(req);
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
@@ -77,7 +77,7 @@ public class AmazonService {
     public String deleteFileFromS3Bucket(String fileUrl) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         DeleteObjectRequest req   = new DeleteObjectRequest(bucketName, "pictures/" + fileName);
-        s3client.deleteObject(req);
+        if (req.getBucketName() != null) s3client.deleteObject(req);
         return "Successfully deleted";
     }
 }
