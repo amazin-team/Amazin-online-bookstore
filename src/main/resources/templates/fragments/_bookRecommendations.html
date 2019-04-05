@@ -1,33 +1,31 @@
 <div th:fragment="dataTable" th:switch="${recommendedBooks}" xmlns:th="http://www.w3.org/1999/xhtml">
-    <h3 th:case="null">No recommendations at the current moment..</h3>
+    <h4 th:case="null">No recommendations at the current moment..</h4>
     <div th:case="*">
-	<h3>You may like:</h3>
-	<table id="recommendations_table">
-	    <thead>
-	    <tr>
-		<th>Name</th>
-		<th>Description</th>
-		<th>Author</th>
-		<th>Publisher</th>
-		<th>ISBN</th>
-		<th>Inventory</th>
-		<th>Price</th>
-		<th>Add</th>
-	    </tr>
-	    </thead>
-	    <tbody>
-	    <tr th:each="book : ${recommendedBooks}">
-		<td th:text="${book.name}"></td>
-		<td th:text="${book.description}"></td>
-		<td th:text="${book.author}"></td>
-		<td th:text="${book.publisher}"></td>
-		<td th:text="${book.ISBN}"></td>
-		<td th:text="${book.Inventory}"></td>
-		<td th:text="${book.Price}"></td>
-		<td><a class="add-cart-button" th:onclick="|addBookToCart(${book.id})|" href="#">Add to Cart</a>
-		</td>
-	    </tr>
-	    </tbody>
-	</table>
+	<h4>You may like:</h4>
+        <div class="mdl-card mdl-shadow--2dp mdl-card--horizontal" th:each="book : ${recommendedBooks}" style="width:100%">
+            <div class="mdl-card__media">
+                <img class = "card-image" th:src="${book.picture_url == null || !book.picture_url.isEmpty()} ? ${book.picture_url} : 'http://i.imgur.com/J5LVHEL.jpg'" alt="img">
+            </div>
+            <div class="row">
+                <div class="col-md-10 mdl-card__title">
+                    <h2 class="mdl-card__title-text" th:text="${book.name}"></h2>
+                </div>
+                <div class="col-md-2 add-cart-button-container">
+                    <a class="add-cart-button" th:onclick="|addBookToCart(${book.id})|" href="#">Add to cart &nbsp; <i class="fas fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="mdl-card__supporting-text" th:text="${book.description}"></div>
+            <div class="mdl-card__supporting-text" th:text="${book.author}">Author:</div>
+
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   data-upgraded=",MaterialButton,MaterialRipple"
+                   th:href="@{'/book/' + ${book.id}}">
+                    View book
+                </a>
+
+            </div>
+
+        </div>
     </div>
 </div>
