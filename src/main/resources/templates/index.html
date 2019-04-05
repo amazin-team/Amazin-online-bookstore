@@ -9,6 +9,12 @@
     <body>
     <div layout:fragment="content">
         <div th:replace=" ~{fragments/_bookShower.html :: dataTable} "></div>
+	<br>
+	<div th:replace=" ~{fragments/_bookRecommendations.html :: dataTable} "></div>
     </div>
+
+    <th:block layout:fragment="script">
+        <script src="/js/cart.js"></script>
+    </th:block>
 </body>
 </html>

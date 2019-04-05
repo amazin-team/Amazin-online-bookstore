@@ -217,12 +217,16 @@ body {
 
 }
 
-    .mdl-card__supporting-text {
-        flex: 1 1 auto;
-        width: auto;
-    }
+.mdl-card__supporting-text {
+     flex: 1 1 auto;
+     width: auto;
+ }
 
-    .card-image {
-        width: 150px;
-        height: 200px;
-    }
+.card-image {
+    width: 150px;
+    height: 200px;
+}
+
+.add-cart-button-container{
+    padding-top:30px;
+}

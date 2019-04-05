@@ -23,8 +23,7 @@
     <div th:id="'cart-item-' + ${item.book.id}" th:each="item : ${cart.items}">
             <div class="row">
             <div class="cart-item-img col-xs-height col-xs-4 col-md-4 col-lg-3 col-top">
-                <img src="https://via.placeholder.com/155x200">
-                <!--<img th:attr="src=@{${item.book.picture}}">-->
+                <img class = "view-image" th:src="${!item.book.picture_url.isEmpty()} ? ${item.book.picture_url} : 'http://i.imgur.com/J5LVHEL.jpg'" alt="img">
             </div>
             <div class="cart-item-info col-xs-height col-xs-8 col-md-8 col-lg-9 col-top">
                 <div class="cart-item-name" th:text="${item.book.name}"></div>

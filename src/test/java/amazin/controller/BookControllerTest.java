@@ -9,36 +9,49 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.util.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import amazin.BookTestUtil;
 import amazin.model.Book;
 import amazin.service.BookService;
 import amazin.service.HibernateSearchService;
+import amazin.service.AmazonService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BookControllerTest {
 
     private BookController controller;
     private BookService bookService;
+    private AmazonService amazonService;
+    private AmazonS3 s3;
 
     @Before
     public void setUp() {
+        BookTestUtil.setup();
         bookService = mock(BookService.class);
+        s3 = mock(AmazonS3.class);
         mock(HibernateSearchService.class);
-        controller = new BookController(bookService);
+        amazonService = new AmazonService();
+        controller = new BookController(bookService, amazonService);
     }
 
     /**
@@ -75,7 +88,7 @@ public class BookControllerTest {
         BindingAwareModelMap model = new BindingAwareModelMap();
         Book updated = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
         Optional<Book> optionalBook = Optional.of(updated);
         when(bookService.findById(BookTestUtil.ID)).thenReturn(optionalBook);
@@ -97,38 +110,43 @@ public class BookControllerTest {
         assertEquals(updated.getName(), formModel.getName());
         assertEquals(updated.getInventory(), formModel.getInventory());
         assertEquals(updated.getPrice(), formModel.getPrice(), 0.1);
+        assertEquals(updated.getTags(), formModel.getTags());
     }
 
     @Test
     public void addBook() {
         Book formModel = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
         Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
-        when(bookService.create(formModel)).thenReturn(model);
+       when(bookService.create(formModel)).thenReturn(model);
 
-        MockHttpServletRequest mockRequest = new MockHttpServletRequest("POST", "/addbook");
-        BindingResult result = bind(mockRequest, formModel);
+       MockHttpServletRequest mockRequest = new MockHttpServletRequest("POST", "/addbook");
+       BindingResult result = bind(mockRequest, formModel);
 
-        String view = controller.addBook(formModel, result);
+       MockMultipartFile file = new MockMultipartFile("file", "orig", null, "bar".getBytes());
 
-        verify(bookService, times(1)).create(formModel);
-        verifyNoMoreInteractions(bookService);
 
-        String expectedView = BookTestUtil.createRedirectViewPath(BookController.REQUEST_MAPPING_BOOK);
-        assertEquals(expectedView, view);
-    }
+       String view = controller.addBook(file,formModel, result);
+
+       verify(bookService, times(1)).create(formModel);
+       verifyNoMoreInteractions(bookService);
+
+       String expectedView = BookTestUtil.createRedirectViewPath(BookController.REQUEST_MAPPING_BOOK);
+       assertEquals(expectedView, view);
+   }
 
     @Test
     public void deleteBook() {
 
         Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
+
 
         Optional<Book> optionalBook = Optional.of(model);
         when(bookService.delete(BookTestUtil.ID)).thenReturn(optionalBook);

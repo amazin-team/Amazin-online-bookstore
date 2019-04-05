@@ -1,9 +1,13 @@
 package amazin;
 
+import java.util.Set;
+import java.util.HashSet;
+
 import org.junit.*;
 import org.springframework.test.util.AssertionErrors;
 
 import amazin.model.Book;
+import amazin.model.Tag;
 
 public class BaseTest {
 
@@ -16,11 +20,15 @@ public class BaseTest {
     protected static String DEFAULT_PICTURE = "/the-test.jpg";
     protected static String DEFAULT_AUTHOR = "Moe";
     protected static String DEFAULT_PUBLISHER = "Amazin Publishers";
+    protected static Set<Tag> DEFAULT_TAGS = new HashSet<Tag>();
     protected static int DEFAULT_INVENTORY = 6666;
     protected static double DEFAULT_PRICE = 66.66;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
+        Tag stubTag = new Tag();
+        stubTag.setId("stub");
+        DEFAULT_TAGS.add(stubTag);
     }
 
     @AfterClass
@@ -30,7 +38,7 @@ public class BaseTest {
     @Before
     public void setUp() throws Exception {
         book = new Book(DEFAULT_ID, DEFAULT_NAME, DEFAULT_DESCRIPTION, DEFAULT_ISBN, DEFAULT_PICTURE, DEFAULT_AUTHOR,
-                DEFAULT_PUBLISHER, DEFAULT_INVENTORY, DEFAULT_PRICE);
+                        DEFAULT_PUBLISHER, DEFAULT_INVENTORY, DEFAULT_PRICE, DEFAULT_TAGS);
     }
 
     @After
@@ -67,7 +75,7 @@ public class BaseTest {
             break;
 
         case PICTURE:
-            book.setPicture((String) val);
+            book.setPicture_url((String) val);
             break;
 
         case PUBLISHER:
@@ -80,6 +88,10 @@ public class BaseTest {
 
         case PRICE:
             book.setPrice((Double) val);
+            break;
+
+        case TAGS:
+            book.setTags((Set<Tag>) val);
             break;
         }
 
@@ -129,7 +141,7 @@ public class BaseTest {
             break;
 
         case PICTURE:
-            result = book.getPicture();
+            result = book.getPicture_url();
             if (defaultValue)
                 expected = DEFAULT_PICTURE;
             break;
@@ -152,6 +164,11 @@ public class BaseTest {
                 expected = DEFAULT_PRICE;
             break;
 
+        case TAGS:
+            result = book.getTags();
+            if (defaultValue)
+                expected = DEFAULT_TAGS;
+            break;
         }
 
         if (expected != null)

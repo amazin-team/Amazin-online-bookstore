@@ -24,28 +24,36 @@ import org.springframework.web.bind.WebDataBinder;
 import amazin.BookTestUtil;
 import amazin.model.Book;
 import amazin.repository.BookRepository;
+import amazin.repository.TagRepository;
 import amazin.service.BookService;
+import amazin.service.AmazonService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BookControllerIntegrationTest {
 
     private BookController controller;
     private BookService bookService;
+    private AmazonService amazonService;
 
     @Mock
     private BookRepository repo;
 
+    @Mock
+    private TagRepository tagRepo;
+
     @Before
     public void setUp() {
-        bookService = new BookService(repo);
-        controller = new BookController(bookService);
+        BookTestUtil.setup();
+        bookService = new BookService(repo, tagRepo);
+        amazonService = new AmazonService();
+        controller = new BookController(bookService, amazonService);
     }
 
     @Test
     public void updateBook() {
         Book book = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
         Optional<Book> optionalBook = Optional.of(book);
         when(bookService.findById(BookTestUtil.ID)).thenReturn(optionalBook);
@@ -53,7 +61,7 @@ public class BookControllerIntegrationTest {
         Book formObject = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME_UPDATED,
                 BookTestUtil.DESCRIPTION_UPDATED, BookTestUtil.ISBN_UPDATED, BookTestUtil.PICTURE_UPDATED,
                 BookTestUtil.AUTHOR_UPDATED, BookTestUtil.PUBLISHER_UPDATED, BookTestUtil.INVENTORY_UPDATED,
-                BookTestUtil.PRICE_UPDATED);
+                BookTestUtil.PRICE_UPDATED, BookTestUtil.TAGS_UPDATED);
 
         MockHttpServletRequest mockRequest = new MockHttpServletRequest("POST", "/update/" + BookTestUtil.ID);
         BindingResult result = bind(mockRequest, formObject);

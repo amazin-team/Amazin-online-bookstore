@@ -1,6 +1,8 @@
 package amazin.model;
 
 import java.util.Objects;
+import java.util.Set;
+import java.util.HashSet;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -41,7 +43,7 @@ public class Book {
     private String ISBN;
     @Column(name = "book_picture")
     @Field
-    private String picture;
+    private String picture_url;
     @NotNull
     @Size(min = 2, message = "Book author should have at least 2 characters")
     @Column(name = "book_author")
@@ -60,6 +62,11 @@ public class Book {
     @Column(name = "book_price")
     @Field
     private double price;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "book_tags",
+               joinColumns = @JoinColumn(name = "book_id"),
+               inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags;
 
     public Long getId() {
         return id;
@@ -93,12 +100,12 @@ public class Book {
         this.ISBN = ISBN;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getPicture_url() {
+        return picture_url;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setPicture_url(String picture) {
+        this.picture_url = picture;
     }
 
     public String getAuthor() {
@@ -133,26 +140,64 @@ public class Book {
         this.price = price;
     }
 
-    public Book() {
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public Book(Long id, String name, String description, String ISBN, String picture, String author, String publisher,
-            int inventory, double price) {
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+
+        // The tags need to reference the books associated
+        // to build the join table properly.
+        for(Tag tag: tags) {
+            tag.getBooks().add(this);
+        }
+    }
+
+    public boolean addTag(Tag tag) {
+        tag.getBooks().add(this);
+        return tags.add(tag);
+    }
+
+    public boolean removeTag(Tag tag) {
+        tag.getBooks().remove(this);
+        return tags.remove(tag);
+    }
+
+    public Book() {
+        tags = new HashSet<>();
+    }
+
+    public Book(Long id, String name, String description, String ISBN, String picture_url, String author, String publisher,
+                int inventory, double price, Set<Tag> tags) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.ISBN = ISBN;
-        this.picture = picture;
+        this.picture_url = picture_url;
         this.author = author;
         this.publisher = publisher;
         this.inventory = inventory;
         this.price = price;
+        this.tags = tags;
     }
 
     @Override
     public String toString() {
-        return "Book{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", ISBN="
-                + ISBN + ", picture='" + picture + '\'' + ", author='" + author + '\'' + ", publisher='" + publisher
+        String returnString = "Book{" + "id=" + id + ", name='" + name + '\'' + ", description='"
+                               + description + '\'' + ", tags='[";
+
+        for (Tag tag: tags) {
+            returnString += tag.toString() + ", ";
+        }
+
+        if (tags.size() > 0)
+            returnString = returnString.substring(0, returnString.length() - 2);
+
+        returnString += "]'";
+
+        return returnString + '\'' +  ", ISBN=" + ISBN + ", picture='" + picture_url + '\''
+                + ", author='" + author + '\'' + ", publisher='" + publisher
                 + '\'' + ", inventory='" + inventory + '\'' + ", price='" + price + '\'' + '}';
     }
 
@@ -166,13 +211,15 @@ public class Book {
         Book book = (Book) o;
         return Objects.equals(id, book.id) && Objects.equals(name, book.name)
                 && Objects.equals(description, book.description) && Objects.equals(ISBN, book.ISBN)
-                && Objects.equals(picture, book.picture) && Objects.equals(author, book.author)
-                && Objects.equals(publisher, book.publisher) && inventory == book.inventory && price == book.price;
+                && Objects.equals(picture_url, book.picture_url) && Objects.equals(author, book.author)
+                && Objects.equals(publisher, book.publisher) && inventory == book.inventory && price == book.price
+                && Objects.equals(tags, book.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, ISBN, picture, author, publisher, inventory, price);
+        return Objects.hash(id, name, description, tags, ISBN,
+                            picture_url, author, publisher, inventory, price);
     }
 
 }
