@@ -1,8 +1,8 @@
-<div th:fragment="dataTable" th:switch="${books}" xmlns:th="http://www.w3.org/1999/xhtml">
-    <h2 th:case="null">Book Catalogue is Empty!</h2>
+<div th:fragment="dataTable" th:switch="${recommendedBooks}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h4 th:case="null">No recommendations at the current moment..</h4>
     <div th:case="*">
-
-        <div class="mdl-card mdl-shadow--2dp mdl-card--horizontal" th:each="book : ${books}" style="width:100%">
+	<h4>You may like:</h4>
+        <div class="mdl-card mdl-shadow--2dp mdl-card--horizontal" th:each="book : ${recommendedBooks}" style="width:100%">
             <div class="mdl-card__media">
                 <img class = "card-image" th:src="${book.picture_url == null || !book.picture_url.isEmpty()} ? ${book.picture_url} : 'http://i.imgur.com/J5LVHEL.jpg'" alt="img">
             </div>

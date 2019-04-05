@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 
 import amazin.model.User;
 import amazin.repository.UserRepository;
 import amazin.service.SecurityServiceImpl;
+import org.springframework.validation.FieldError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import amazin.model.Book;
+import amazin.model.ShoppingCart;
+import amazin.repository.ShoppingCartRepository;
+import amazin.model.Tag;
+import amazin.service.SecurityService;
+import amazin.service.UserServiceImpl;
 import amazin.service.BookService;
 import amazin.service.HibernateSearchService;
 
@@ -29,6 +36,7 @@ public class BookController {
     public static final String VIEW_CREATE_BOOK = "create-book";
     public static final String VIEW_UPDATE_BOOK = "update-book";
     public static final String MODEL_ATTRIBUTE_BOOK = "books";
+    public static final String MODEL_ATTRIBUTE_RECOMMENDATIONS = "recommendedBooks";
     public static final String PARAMETER_BOOK_ID = "id";
     public static final String REQUEST_MAPPING_BOOK = "/";
     public static final String VIEW_BOOK = "view-book";
@@ -41,7 +49,11 @@ public class BookController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private UserServiceImpl userService;
+    @Autowired
     private SecurityServiceImpl securityService;
+    @Autowired
+    ShoppingCartRepository shoppingCartRepository;
 
     @Autowired
     private final AmazonService amazonService;
@@ -56,6 +68,33 @@ public class BookController {
         User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
         model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
         model.addAttribute(MODEL_ATTRIBUTE_BOOK, new Book());
+        return VIEW_CREATE_BOOK;
+    }
+
+    @RequestMapping(value = {"/addbook",
+                             "/update/{id}"}, params = {"addRow"})
+    public String addTag(@ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result) {
+        String errorMessage = "Please enter a unique tag before adding another tag";
+
+        Tag newTag = new Tag();
+        newTag.setId("");
+
+        if (!book.addTag(newTag))
+            result.addError(new FieldError("books", "tags", errorMessage));
+
+        return VIEW_CREATE_BOOK;
+    }
+
+    @RequestMapping(value = {"/addbook",
+                             "/update/{id}"}, params = {"removeRow"})
+    public String removeTag(@ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result,
+                            HttpServletRequest req) {
+        String tagId = req.getParameter("removeRow");
+
+        Tag removedTag = new Tag();
+        removedTag.setId(tagId);
+
+        book.removeTag(removedTag);
         return VIEW_CREATE_BOOK;
     }
 
@@ -152,6 +191,27 @@ public class BookController {
             model.addAttribute(MODEL_ATTRIBUTE_BOOK, null);
         else
             model.addAttribute(MODEL_ATTRIBUTE_BOOK, searchResults);
+
+        User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
+
+        if (currentUser != null) {
+            userService.recordUserTags(currentUser, searchResults);
+            userRepository.save(currentUser);
+
+            ShoppingCart userCart = shoppingCartRepository.findByUser(currentUser);
+
+            model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
+            model.addAttribute("cart", userCart);
+            model.addAttribute(BookController.MODEL_ATTRIBUTE_RECOMMENDATIONS,
+                               bookService.getAllRecommendedBooks(currentUser));
+        }
+        else {
+            model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, null);
+            model.addAttribute("cart", null);
+            model.addAttribute(BookController.MODEL_ATTRIBUTE_RECOMMENDATIONS,
+                               null);
+        }
+
         return "index";
     }
 

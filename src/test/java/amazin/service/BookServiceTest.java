@@ -11,7 +11,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import amazin.repository.TagRepository;
 import org.junit.Test;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
@@ -21,16 +23,26 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import amazin.BookTestUtil;
 import amazin.model.Book;
 import amazin.repository.BookRepository;
+import amazin.repository.TagRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BookServiceTest {
-    @InjectMocks
+
     BookService service;
 
     @Mock
     BookRepository repository;
 
+    @Mock
+    TagRepository tagRepository;
+
     private static final Long ID = 1L;
+
+    @Before
+    public void setUp() {
+        service = new BookService(repository, tagRepository);
+        BookTestUtil.setup();
+    }
 
     @Test
     public void findByIdTest() {
@@ -55,7 +67,7 @@ public class BookServiceTest {
     public void createTest() {
         Book formModel = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
         service.create(formModel);
 
@@ -73,6 +85,7 @@ public class BookServiceTest {
         assertEquals(formModel.getName(), model.getName());
         assertEquals(formModel.getInventory(), model.getInventory());
         assertEquals(formModel.getPrice(), model.getPrice(), 0.1);
+        assertEquals(formModel.getTags(), model.getTags());
     }
 
     @Test
@@ -80,11 +93,11 @@ public class BookServiceTest {
         Book formModel = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME_UPDATED,
                 BookTestUtil.DESCRIPTION_UPDATED, BookTestUtil.ISBN_UPDATED, BookTestUtil.PICTURE_UPDATED,
                 BookTestUtil.AUTHOR_UPDATED, BookTestUtil.PUBLISHER_UPDATED, BookTestUtil.INVENTORY_UPDATED,
-                BookTestUtil.PRICE_UPDATED);
+                BookTestUtil.PRICE_UPDATED, BookTestUtil.TAGS_UPDATED);
 
         Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
 
         Optional<Book> optionalModel = Optional.of(model);
         when(repository.findById(formModel.getId())).thenReturn(optionalModel);
@@ -102,13 +115,14 @@ public class BookServiceTest {
         assertEquals(formModel.getName(), actual.getName());
         assertEquals(formModel.getInventory(), actual.getInventory());
         assertEquals(formModel.getPrice(), actual.getPrice(), 0.1);
+        assertEquals(formModel.getTags(), actual.getTags());
     }
 
     @Test
     public void deleteTest() {
         Book model = BookTestUtil.createModel(BookTestUtil.ID, BookTestUtil.NAME, BookTestUtil.DESCRIPTION,
                 BookTestUtil.ISBN, BookTestUtil.PICTURE, BookTestUtil.AUTHOR, BookTestUtil.PUBLISHER,
-                BookTestUtil.INVENTORY, BookTestUtil.PRICE);
+                BookTestUtil.INVENTORY, BookTestUtil.PRICE, BookTestUtil.TAGS);
         Optional<Book> optionalModel = Optional.of(model);
 
         when(repository.findById(BookTestUtil.ID)).thenReturn(optionalModel);
