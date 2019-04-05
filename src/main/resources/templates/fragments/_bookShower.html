@@ -4,7 +4,7 @@
 
         <div class="mdl-card mdl-shadow--2dp mdl-card--horizontal" th:each="book : ${books}" style="width:100%">
             <div class="mdl-card__media">
-                <img class = "card-image" th:src="${!book.picture_url.isEmpty()} ? ${book.picture_url} : 'http://i.imgur.com/J5LVHEL.jpg'" alt="img">
+                <img class = "card-image" th:src="${book.picture_url == null || !book.picture_url.isEmpty()} ? ${book.picture_url} : 'http://i.imgur.com/J5LVHEL.jpg'" alt="img">
             </div>
             <div class="row">
                 <div class="col-md-10 mdl-card__title">
