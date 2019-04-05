@@ -73,7 +73,8 @@ public class BookController {
 
     @RequestMapping(value = {"/addbook",
                              "/update/{id}"}, params = {"addRow"})
-    public String addTag(@ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result) {
+    public String addTag(@ModelAttribute(MODEL_ATTRIBUTE_BOOK) Book book, BindingResult result,
+                         HttpServletRequest req) {
         String errorMessage = "Please enter a unique tag before adding another tag";
 
         Tag newTag = new Tag();
@@ -81,6 +82,12 @@ public class BookController {
 
         if (!book.addTag(newTag))
             result.addError(new FieldError("books", "tags", errorMessage));
+
+        String uri = req.getRequestURI();
+
+        if (uri.contains("update")) {
+            return VIEW_UPDATE_BOOK;
+        }
 
         return VIEW_CREATE_BOOK;
     }
@@ -95,6 +102,13 @@ public class BookController {
         removedTag.setId(tagId);
 
         book.removeTag(removedTag);
+
+        String uri = req.getRequestURI();
+
+        if (uri.contains("update")) {
+            return VIEW_UPDATE_BOOK;
+        }
+
         return VIEW_CREATE_BOOK;
     }
 
@@ -113,6 +127,9 @@ public class BookController {
     @GetMapping("/book/{id}")
     public String getBookForm(@PathVariable("id") Long id, Model model) {
         Optional<Book> optionalBook = bookService.findById(id);
+
+        User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
+        model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
 
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
