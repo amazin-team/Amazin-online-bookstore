@@ -128,6 +128,9 @@ public class BookController {
     public String getBookForm(@PathVariable("id") Long id, Model model) {
         Optional<Book> optionalBook = bookService.findById(id);
 
+        User currentUser = userRepository.findByEmail(securityService.findLoggedInEmail());
+        model.addAttribute(UserController.MODEL_ATTRIBUTE_USER, currentUser);
+
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             model.addAttribute(MODEL_ATTRIBUTE_BOOK, book);
